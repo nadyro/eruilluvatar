@@ -1,12 +1,21 @@
-# BEGIN WordPress
+## BEGIN WordPress
+#<IfModule mod_rewrite.c>
+#RewriteEngine On
+#RewriteBase 
+#RewriteRule . index.php - [L]
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule . index.php [L]
+##ErrorDocument 404 /index.php
+#</IfModule>
+#
+## END WordPress
 <IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase /
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
-#ErrorDocument 404 /index.php
-</IfModule>
+	RewriteEngine On
+	
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
 
-# END WordPress
+	RewriteRule . index.php [L]
+
+</IfModule>

@@ -3,13 +3,14 @@ require_once "conf.inc.php";
 require_once "functions.php";
 
 function autoloader($class) {
+    $class = strtolower($class);
     //Vérifier s'il existe dans le dossier
     //core un fichier du nom de $class.class.php
     //Si oui alors include
     if (file_exists("core/" . $class . ".class.php")) {
-        include "core/" . $class . ".class.php";
+        include DIRECTORY_URL."core/" . $class . ".class.php";
     } else if (file_exists("models/" . $class . ".class.php")) {
-        include "models/" . $class . ".class.php";
+        include DIRECTORY_URL."models/" . $class . ".class.php";
     }
 }
 
