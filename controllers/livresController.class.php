@@ -193,7 +193,7 @@ class livresController {
 
                 if ($validation_form != false) {
                     $nom_img_md5 = md5($_FILES['img_livre']['name']) . ".jpg";
-                    $img_md5 = "images/livres_images/" . $nom_img_md5 . ".jpg";
+                    $img_md5 = "images/livres_images/" . $nom_img_md5;
 
                     if (move_uploaded_file($_FILES['img_livre']['tmp_name'], DIRECTORY_URL . $img_md5)) {
                         

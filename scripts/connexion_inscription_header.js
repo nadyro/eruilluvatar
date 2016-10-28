@@ -104,7 +104,7 @@ $(document).ready(function () {
             $(".inscription_header_panel input").css("background-color", "white");
             $(".inscription_header_panel input").css("color", "black");
             $.ajax({
-                url: "myproject/user/inscription",
+                url: "/myproject/user/inscription",
                 type: "GET",
                 data: {
                     nom_inscription_header: $(".nom_inscription_header").val(),
@@ -142,7 +142,7 @@ $(document).ready(function () {
 
     $(".submit_connexion_header").click(function () {
         $.ajax({
-            url: "myproject/user/connexion",
+            url: "/myproject/user/connexion",
             type: "GET",
             data: {
                 email_connexion: $(".email_connexion_header").val(),
