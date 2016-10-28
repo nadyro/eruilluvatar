@@ -9,7 +9,7 @@ $(document).ready(function(){
   }
   
   $(".mes_livres").click(function(){
-      var post_id = $(this).attr("post-id");
+      var post_id = readCookie("cookie_users");
       
       $.ajax({
          url:"livres/modifierlivres",

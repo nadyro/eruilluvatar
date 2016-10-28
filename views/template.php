@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <?php
 session_start();
-//var_dump($_SESSION);
-//var_dump($_SERVER);
-//die();
 require $_SERVER['DOCUMENT_ROOT']."/myproject/"."models/Headersentence.class.php";
 require $_SERVER['DOCUMENT_ROOT']."/myproject/"."Mobile_Detect/Mobile_Detect.php";
 $detect = new Mobile_Detect;
@@ -11,18 +8,10 @@ global $global_url_src;
 $global_url_src = "http://" . $_SERVER["HTTP_HOST"] . "/myproject";
 $header_sentence_text = getHeaderSentence();
 unset($_COOKIE['cookie_user']);
-//$cookie_name = "cookie_user";
-//$cookie_value = $_SESSION['user']['id'];
 setcookie("cookie_user", '', time() - 3600, '/');
-//var_dump($_COOKIE);
-//die();
 if (!empty($_SESSION)) {
     setcookie("cookie_users", $_SESSION['user']['id'], time() + (86400 * 365), '/');
-//    unset($_COOKIE['test1']);
-//    unset($_COOKIE['cookie_user']);
-//        $_COOKIE[$cookie_name] = array(1 => $cookie_value);
 }
-//var_dump($_COOKIE);
 ?>
 <html lang="fr">
     <head>
@@ -51,7 +40,6 @@ if (!empty($_SESSION)) {
     </head>
     <body>
         <header class="header_template">
-            <!--<img height="200" width="200" src="<?php // echo $global_url_src                        ?>/images/space_home.jpg" alt="Home" id="space_home_header">-->
             <h1><a href="<?php echo $global_url_src; ?>">Euphème</a></h1>
             <ul class="liste_header_template">
                 <li>

@@ -6,7 +6,7 @@
         </p>
     </div>
     <div class="images_livres">
-        <a href="<?php echo $global_url_src . "/suggestions/suggestionslivres"?>"><img src="../images/leslivres.jpg" class="livres_img" alt="Les Livres"></a>
+        <a href="<?php echo $global_url_src . "/suggestions/suggestionslivres"?>"><img src="<?php echo $global_url_src ?>/images/leslivres.jpg" class="livres_img" alt="Les Livres"></a>
     </div>
 </div>
 <div class="all_second_half">
@@ -16,7 +16,7 @@
         </p>
     </div>
     <div class="images_pieces">
-        <a href="<?php echo $global_url_src . "/suggestions/suggestionspieces"?>"><img src="../images/lespieces.jpg" class="pieces_img" alt="Les Livres"></a>
+        <a href="<?php echo $global_url_src . "/suggestions/suggestionspieces"?>"><img src="<?php echo $global_url_src ?>/images/lespieces.jpg" class="pieces_img" alt="Les Pièces"></a>
     </div>
 </div>
 <div class="all_little_half"></div>

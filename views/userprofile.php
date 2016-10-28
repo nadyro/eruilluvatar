@@ -3,7 +3,6 @@
     <div class="titre_first_half">
         <p>Informations personnelles</p>
     </div>
-    <?php // var_dump($_SESSION); ?>
     <form action="<?php echo $global_url_src . '/userprofile' ?>" method="post" class="form_user_profile">
         <input type="hidden" value="<?php echo $_SESSION['user']['id']; ?>" name="id_user_profile">
         <input type="hidden" value="<?php echo $_SESSION['user']['date_inscription_user']; ?>" name="date_inscription_user_profile">
@@ -42,9 +41,9 @@
     </div>
     <div class="livres_activites">
         <p class="titre_livres_activites">Mes livres</p>
-            <div class="mes_livres" post-id="<?php echo $_SESSION['user']['id']; ?>">
-                <p>Mes livres</p>
-            </div>
+        <div class="mes_livres">
+            <p>Mes livres</p>
+        </div>
         <div class="livres_aimes">
             <p>Les livres que vous aimez</p>
         </div>

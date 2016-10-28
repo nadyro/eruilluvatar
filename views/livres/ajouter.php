@@ -30,7 +30,7 @@
                 <p class="error_genre_length error_text_livre_vue">La longueur du genre doit être comprise entre 1 et 50 caractères.</p>
                 <img src="<?php echo $global_url_src ?>/images/error.png" class="img_error error_livre_vue error_img_genre_length">
                 <p>Genre du livre</p>
-                <select class="genre_livre" name="genre_livre" value="<?php echo !empty($_POST) ? $_POST['genre_livre'] : "" ?>"placeholder="Genre du livre">
+                <select class="genre_livre" name="genre_livre" value="<?php echo!empty($_POST) ? $_POST['genre_livre'] : "" ?>"placeholder="Genre du livre">
                     <option value=""></option>
                     <?php foreach ($genres as $kk => $vv) { ?>
                         <option value="<?php echo $vv['id']; ?>">
@@ -46,7 +46,7 @@
             </p>
             <img src="<?php echo $global_url_src ?>/images/error.png" class="img_error error_livre_vue error_img_synopsis_livre">
             <p class="error_synopsis error_text_livre_vue">Veuillez entrer le synopsis du livre.</p>
-            <textarea placeholder="Entrez un synopsis" name="synopsis" class="synopsis"><?php echo !empty($_POST) ? $_POST['synopsis'] : ""  ?></textarea>
+            <textarea placeholder="Entrez un synopsis" name="synopsis" class="synopsis"><?php echo!empty($_POST) ? $_POST['synopsis'] : "" ?></textarea>
             <p>Image du livre</p>
             <img src="<?php echo $global_url_src ?>/images/error.png" class="img_error error_livre_vue error_img_img_livre">
             <div class="errors_img">
@@ -64,7 +64,7 @@
         <p></p>
     </div>
     <div class="modification_livre">
-        
+
     </div>
 </div>
 

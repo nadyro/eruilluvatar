@@ -1,8 +1,6 @@
 <div class="top_page_suggestions">
-    <!--<p class="suggerer_livre">Suggérer un livre</p>-->
-    <?php // var_dump(DIRECTORY_URL); ?>
     <a href="<?php echo $global_url_src . "/livres/ajouterlivres" ?>">
-        <img src="../images/ajout_livre.jpg" class="img_suggestions" alt="Ajouter un livre">
+        <img src="<?php echo $global_url_src ?>/images/ajout_livre.jpg" class="img_suggestions" alt="Ajouter un livre">
         <div class="overlay_img">
             <p>Suggérer un livre</p>
         </div>
@@ -17,7 +15,7 @@
         <div class="first_line">
             <?php foreach ($genres as $key => $value) { ?>
                 <div class="infos_genre" post-id="<?php echo $value['id']; ?>">
-                    <img src="../images/genres_images/<?php echo $value['image'] ?>">
+                    <img src="<?php echo $global_url_src ?>/images/genres_images/<?php echo $value['image'] ?>">
                     <div class="overlay_img_genre" post-id="<?php echo $value['id'] ?>">
                         <p><?php echo $value['libelle'] ?></p>
                     </div>
@@ -35,14 +33,12 @@
     </div>
     <div class="conteneur_all_lines">
         <div class="first_line">
-                <?php foreach ($livres as $kk => $vv) { ?>
-                    <div class="infos_livre" post-id="<?php echo $vv['id']; ?>">
-                        <img src="../images/livres_images/<?php echo $vv['image'] ?>" alt="<?php echo $vv['titre'] ?>" class="img_livre">
-                        <!--<div class="overlay_img_livre" post-id="<?php echo $kk ?>">-->
-                        <!--</div>-->
-                    </div>
+            <?php foreach ($livres as $kk => $vv) { ?>
+                <div class="infos_livre" post-id="<?php echo $vv['id']; ?>">
+                    <img src="<?php echo $global_url_src ?>/images/livres_images/<?php echo $vv['image'] ?>" alt="<?php echo $vv['titre'] ?>" class="img_livre">
+                </div>
 
-                <?php } ?>
+            <?php } ?>
         </div>
     </div>
 </div>

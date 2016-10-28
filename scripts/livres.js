@@ -99,15 +99,15 @@ $(document).ready(function () {
 
         });
     });
-    $(".tool_img_livre_affiche img").hover(function(){
-        $(this).animate({
-           width:"85%" 
-        });
-    }, function(){
-        $(this).animate({
-           width:"80%" 
-        });
-    });
+//    $(".tool_img_livre_affiche img").hover(function(){
+//        $(this).animate({
+//           width:"85%" 
+//        });
+//    }, function(){
+//        $(this).animate({
+//           width:"80%" 
+//        });
+//    });
     $(".second_img_livre_affiche").each(function () {
         $(this).click(function () {
             var livre_id = $(this).attr("livre-id");

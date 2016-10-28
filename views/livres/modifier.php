@@ -6,9 +6,9 @@
     <div class="ajouter_livre">
         <?php foreach ($livres as $kk => $value) { ?>
             <form action="<?php echo $global_url_src . '/livres/modifierlivres?profile_livre=' . $_GET['profile_livre']; ?>" method="post" class="ajouter_livres_form" enctype="multipart/form-data"
-                  style="<?php if(!empty($value['image'])){ ?>background: url('../images/livres_images/<?php echo $value['image'] ?>') no-repeat;
-                  background-size: 100% 100%;<?php }else{ ?>
-                  background-color: rgba(0,0,0,0.7);
+                  style="<?php if (!empty($value['image'])) { ?>background: url('../images/livres_images/<?php echo $value['image'] ?>') no-repeat;
+                      background-size: 100% 100%;<?php } else { ?>
+                      background-color: rgba(0,0,0,0.7);
                   <?php } ?>
                   ">
                 <input type='hidden' name='id_livre' class='id_livre' value="<?php echo $value['id']; ?>">
@@ -69,15 +69,15 @@
                     <p class="error_size_img_livre error_text_livre_vue">La taille de l'image doit être inférieurn à 5Mo.</p>
                 </div>
                 <?php if (empty($value['image'])) { ?>
-                <div class='conteneur_label_text_livre'>
-                <label for="img_livre" class="label_text_livre">Sélectionnez une image</label>
-                </div>
+                    <div class='conteneur_label_text_livre'>
+                        <label for="img_livre" class="label_text_livre">Sélectionnez une image</label>
+                    </div>
                 <?php } else { ?>
-                <!--<div class='conteneur_label_img_livre'></div>-->
+                    <!--<div class='conteneur_label_img_livre'></div>-->
                     <label for="img_livre" class='label_img_livre'
-                          style="background: url('../images/livres_images/<?php echo $value['image'] ?>') no-repeat;
-                  background-size: 100% 100%;">
-                        <!--<img src='<?php // echo $global_url_src; ?>/images/livres_images/<?php // echo $value['image']; ?>'>-->
+                           style="background: url('../images/livres_images/<?php echo $value['image'] ?>') no-repeat;
+                           background-size: 100% 100%;">
+                                 <!--<img src='<?php // echo $global_url_src;  ?>/images/livres_images/<?php // echo $value['image'];  ?>'>-->
                     </label>
                     <div class='overlay_img_livre' post-id='<?php echo $value['id']; ?>'>
                         <p>Changer d'image</p>
