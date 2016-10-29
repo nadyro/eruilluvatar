@@ -1,42 +1,45 @@
 <?php
-if (!empty($livre_like)) {
-    foreach ($livre_like as $des_livres_like => $un_livre_like) {
-        if ($un_livre_like['id_user'] == $_SESSION['user']['id']) {
-            if ($un_livre_like['sum_livre_like'] == 0 || $un_livre_like['sum_livre_like'] == -1) {
-                ?>
-                <input type="hidden" value="-1" id="un_livre_like_negatif">
-            <?php } else { ?>
-                <input type="hidden" value="1" id="un_livre_like_positif">
-                <?php
+//var_dump($_COOKIE);
+//if ($_COOKIE['cookie_users'] != "null") {
+    if (!empty($livre_like)) {
+        foreach ($livre_like as $des_livres_like => $un_livre_like) {
+            if ($un_livre_like['id_user'] == $_SESSION['user']['id']) {
+                if ($un_livre_like['sum_livre_like'] == 0 || $un_livre_like['sum_livre_like'] == -1) {
+                    ?>
+                    <input type="hidden" value="-1" id="un_livre_like_negatif">
+                <?php } else { ?>
+                    <input type="hidden" value="1" id="un_livre_like_positif">
+                    <?php
+                }
             }
         }
     }
-}
 
-if (!empty($livre_favorite)) {
-    foreach ($livre_favorite as $des_livres_favorite => $un_livre_favorite) {
-        if ($un_livre_favorite['id_user'] == $_SESSION['user']['id']) {
-            if ($un_livre_favorite['sum_livre_favorite'] == 0 || $un_livre_favorite['sum_livre_favorite'] == -1) {
-                ?>
-                <input type="hidden" value="-1" id="un_livre_favorite_negatif">
-            <?php } else { ?>
-                <input type="hidden" value="1" id="un_livre_favorite_positif">
-                <?php
+    if (!empty($livre_favorite)) {
+        foreach ($livre_favorite as $des_livres_favorite => $un_livre_favorite) {
+            if ($un_livre_favorite['id_user'] == $_SESSION['user']['id']) {
+                if ($un_livre_favorite['sum_livre_favorite'] == 0 || $un_livre_favorite['sum_livre_favorite'] == -1) {
+                    ?>
+                    <input type="hidden" value="-1" id="un_livre_favorite_negatif">
+                <?php } else { ?>
+                    <input type="hidden" value="1" id="un_livre_favorite_positif">
+                    <?php
+                }
             }
         }
     }
-}
+//}
 ?>
 <div class="all_page">
     <div class="conteneur_image_livre">
         <img src="<?php echo $global_url_src ?>/images/livres_images/<?php echo $un_livre[0]['image'] ?>" class="img_livre_affiche">
         <div class="overlay_img_livre_affiche">
             <div class="first_tool_img_livre_affiche tool_img_livre_affiche">
-                <?php // if (empty($_COOKIE['like_livre_user'])) {   ?>
+                <?php // if (empty($_COOKIE['like_livre_user'])) {    ?>
                 <img src="<?php echo $global_url_src ?>/images/loved.png" alt="J'ai aimé ce livre" livre-id="<?php echo $un_livre[0]['id'] ?>" like="1" class="loved_png base_img_livre_affiche">
-                <?php // } else{   ?>
+                <?php // } else{    ?>
                 <img src="<?php echo $global_url_src ?>/images/loved_colored.png" alt="J'ai aimé ce livre" livre-id="<?php echo $un_livre[0]['id'] ?>" like="-1" class="second_loved_png second_img_livre_affiche">
-                <?php // }    ?>
+                <?php // }     ?>
             </div>
             <div class="second_tool_img_livre_affiche tool_img_livre_affiche">
                 <img src="<?php echo $global_url_src ?>/images/comment.png" alt="Commenter" livre-id="<?php echo $un_livre[0]['id'] ?>" like="1"  class="comment_png base_img_livre_affiche">

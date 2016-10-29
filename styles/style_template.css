@@ -15,6 +15,7 @@ body{
 }
 .header_template{
     background-color: rgba(0,0,0,0.7);
+    position: relative;
 }
 .liste_header_template{
     margin: 0;

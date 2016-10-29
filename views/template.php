@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <?php
 session_start();
+
 require $_SERVER['DOCUMENT_ROOT']."/myproject/"."models/Headersentence.class.php";
 require $_SERVER['DOCUMENT_ROOT']."/myproject/"."Mobile_Detect/Mobile_Detect.php";
 $detect = new Mobile_Detect;
 global $global_url_src;
 $global_url_src = "http://" . $_SERVER["HTTP_HOST"] . "/myproject";
 $header_sentence_text = getHeaderSentence();
-unset($_COOKIE['cookie_user']);
-setcookie("cookie_user", '', time() - 3600, '/');
-if (!empty($_SESSION)) {
-    setcookie("cookie_users", $_SESSION['user']['id'], time() + (86400 * 365), '/');
-}
+//var_dump($_COOKIE);
 ?>
 <html lang="fr">
     <head>

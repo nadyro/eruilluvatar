@@ -169,7 +169,8 @@ $(document).ready(function () {
                     $(".submit_connexion_header").css("background-color", "rgba(218, 50, 50,0.4)");
                 }
                 if (result.responseText !== "1" || result.responseText !== "2") {
-                    $(".validation_connexion p").append(result.responseText);
+                    createCookie("cookie_users", result.responseText,"Thu, 01 Jan 2100 00:00:00 UTC");
+                    $(".validation_connexion p").append("Bienvenue " + $(".email_connexion_header").val() + ". C'est un plaisir de vous avoir parmi nous ! :)");
                     $(".connexion_header_panel_erreur_password").hide();
                     $(".connexion_header_panel").animate({
                         height: "0px"
@@ -237,6 +238,7 @@ $(document).ready(function () {
                 data: {
                 },
                 complete: function () {
+                    eraseCookie("cookie_users");
                     location.href = "http://localhost/myproject/";
                 }
             });
