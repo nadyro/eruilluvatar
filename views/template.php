@@ -39,21 +39,6 @@ if (!empty($_SESSION)) {
     <body>
         <header class="header_template">
             <h1><a href="<?php echo $global_url_src; ?>">Euphème</a></h1>
-            <ul class="liste_header_template">
-                <li>
-                    <a href="<?php echo $global_url_src . "/suggestions/index" ?>">Suggestions</a> 
-                </li>
-                <li>
-                    <a href="">Qui sommes-nous ?</a>
-                </li>
-                <li>
-                    <a href="">Où allons-nous ?</a>
-                </li>
-            </ul>
-            <div class="header_text"></div>
-            <?php foreach ($header_sentence_text as $key => $value) { ?>
-                <input type="hidden" value="<?php echo $value['text'] ?>" class="header_text_all header_text_<?php echo $key ?>">
-            <?php } ?>
             <div class="header_buttons">
                 <?php if (empty($_SESSION)) { ?>
                     <div class="connexion_header">
@@ -79,6 +64,22 @@ if (!empty($_SESSION)) {
                     <p>New Sentence</p>
                 </div>
             </div>
+            <ul class="liste_header_template">
+                <li>
+                    <a href="<?php echo $global_url_src . "/suggestions/index" ?>">Suggestions</a> 
+                </li>
+                <li>
+                    <a href="">Qui sommes-nous ?</a>
+                </li>
+                <li>
+                    <a href="">Où allons-nous ?</a>
+                </li>
+            </ul>
+            <div class="header_text"></div>
+            <?php foreach ($header_sentence_text as $key => $value) { ?>
+                <input type="hidden" value="<?php echo $value['text'] ?>" class="header_text_all header_text_<?php echo $key ?>">
+            <?php } ?>
+            
             <div class="all_panels">
                 <!--Connexion-->
                 <div class="connexion_header_panel">
