@@ -1,34 +1,31 @@
 <?php
-//var_dump($_COOKIE);
-//if ($_COOKIE['cookie_users'] != "null") {
-    if (!empty($livre_like)) {
-        foreach ($livre_like as $des_livres_like => $un_livre_like) {
-            if ($un_livre_like['id_user'] == $_SESSION['user']['id']) {
-                if ($un_livre_like['sum_livre_like'] == 0 || $un_livre_like['sum_livre_like'] == -1) {
-                    ?>
-                    <input type="hidden" value="-1" id="un_livre_like_negatif">
-                <?php } else { ?>
-                    <input type="hidden" value="1" id="un_livre_like_positif">
-                    <?php
-                }
+if (!empty($livre_like)) {
+    foreach ($livre_like as $des_livres_like => $un_livre_like) {
+        if ($un_livre_like['id_user'] == $_SESSION['user']['id']) {
+            if ($un_livre_like['sum_livre_like'] == 0 || $un_livre_like['sum_livre_like'] == -1) {
+                ?>
+                <input type="hidden" value="-1" id="un_livre_like_negatif">
+            <?php } else { ?>
+                <input type="hidden" value="1" id="un_livre_like_positif">
+                <?php
             }
         }
     }
+}
 
-    if (!empty($livre_favorite)) {
-        foreach ($livre_favorite as $des_livres_favorite => $un_livre_favorite) {
-            if ($un_livre_favorite['id_user'] == $_SESSION['user']['id']) {
-                if ($un_livre_favorite['sum_livre_favorite'] == 0 || $un_livre_favorite['sum_livre_favorite'] == -1) {
-                    ?>
-                    <input type="hidden" value="-1" id="un_livre_favorite_negatif">
-                <?php } else { ?>
-                    <input type="hidden" value="1" id="un_livre_favorite_positif">
-                    <?php
-                }
+if (!empty($livre_favorite)) {
+    foreach ($livre_favorite as $des_livres_favorite => $un_livre_favorite) {
+        if ($un_livre_favorite['id_user'] == $_SESSION['user']['id']) {
+            if ($un_livre_favorite['sum_livre_favorite'] == 0 || $un_livre_favorite['sum_livre_favorite'] == -1) {
+                ?>
+                <input type="hidden" value="-1" id="un_livre_favorite_negatif">
+            <?php } else { ?>
+                <input type="hidden" value="1" id="un_livre_favorite_positif">
+                <?php
             }
         }
     }
-//}
+}
 ?>
 <div class="all_page">
     <div class="conteneur_image_livre">
@@ -36,9 +33,9 @@
         <div class="overlay_img_livre_affiche">
             <div class="first_tool_img_livre_affiche tool_img_livre_affiche">
                 <?php // if (empty($_COOKIE['like_livre_user'])) {    ?>
-                <img src="<?php echo $global_url_src ?>/images/loved.png" alt="J'ai aimé ce livre" livre-id="<?php echo $un_livre[0]['id'] ?>" like="1" class="loved_png base_img_livre_affiche">
+                <img src="<?php echo $global_url_src ?>/images/loved.png" alt="J'ai aimé ce livre" livre-id="<?php echo $un_livre[0]['id'] ?>" element-type="like" like="1" class="like_favorite_png loved_png">
                 <?php // } else{    ?>
-                <img src="<?php echo $global_url_src ?>/images/loved_colored.png" alt="J'ai aimé ce livre" livre-id="<?php echo $un_livre[0]['id'] ?>" like="-1" class="second_loved_png second_img_livre_affiche">
+                <img src="<?php echo $global_url_src ?>/images/loved_colored.png" alt="J'ai aimé ce livre" livre-id="<?php echo $un_livre[0]['id'] ?>" element-type="like" like="-1" class="like_favorite_png second_loved_png second_img_livre_affiche">
                 <?php // }     ?>
             </div>
             <div class="second_tool_img_livre_affiche tool_img_livre_affiche">
@@ -46,8 +43,8 @@
                 <img src="<?php echo $global_url_src ?>/images/comment_colored.png" alt="J'ai aimé ce livre" livre-id="<?php echo $un_livre[0]['id'] ?>" like="-1" class="second_comment_png second_img_livre_affiche">
             </div>
             <div class="third_tool_img_livre_affiche tool_img_livre_affiche">
-                <img src="<?php echo $global_url_src ?>/images/favorite.png" alt="J'ai aimé ce livre" livre-id="<?php echo $un_livre[0]['id'] ?>" favorite="1" class="favorite_png base_img_livre_affiche">
-                <img src="<?php echo $global_url_src ?>/images/favorite_colored.png" alt="J'ai aimé ce livre" livre-id="<?php echo $un_livre[0]['id'] ?>" favorite="-1" class="second_favorite_png second_img_livre_affiche">
+                <img src="<?php echo $global_url_src ?>/images/favorite.png" alt="J'ai aimé ce livre" livre-id="<?php echo $un_livre[0]['id'] ?>" element-type="favorite" favorite="1" class="favorite_png like_favorite_png">
+                <img src="<?php echo $global_url_src ?>/images/favorite_colored.png" alt="J'ai aimé ce livre" livre-id="<?php echo $un_livre[0]['id'] ?>" element-type="favorite" favorite="-1" class="like_favorite_png second_favorite_png second_img_livre_affiche">
             </div>
         </div>
 
@@ -73,9 +70,23 @@
         </p>
     </div>
 </div>
-<div class="all_second_half">
+<div class="all_second_half un_livre_second_half">
     <div class="titre_second_half">
-        <p></p>
+        <p>
+            Commentaires
+        </p>
+    </div>
+    <div class="commentaires_livre">
+        <div class="infos_user_commentaire">
+            <p>
+                <?php echo "Nadir Sehnoun"; ?>
+            </p>
+        </div>
+        <div class="le_commentaire">
+            <p>
+                <?php echo "Un très bon livre"; ?>
+            </p>
+        </div>
     </div>
 </div>
 <div class="all_little_half"></div>

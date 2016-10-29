@@ -136,6 +136,8 @@ function setLivres_Likes($id_livre, $user_profile, $date = "", $nb_likes) {
     global $pdo;
     if ($user_profile != "null") {
         $sql = "INSERT INTO livres_likes (id_livre, id_user, date_like, nb_likes) VALUES ('$id_livre', '$user_profile', '$date', '$nb_likes')";
+//        var_dump($sql);
+//        die();
         $query = $pdo->prepare($sql);
         $query->execute();
     }

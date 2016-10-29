@@ -125,6 +125,31 @@ input[type="date"]{
     background-color: rgba(0,0,0,0.7);
     text-align: center;
 }
+.commentaires_livre{
+    width: 70%;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.7);
+}
+.un_livre_second_half .titre_second_half{
+    text-align: center;
+}
+.un_livre_second_half{
+    background-color: rgba(0,0,0,0.7);
+}
+.un_livre_second_half .infos_user_commentaire{
+    text-align: left;
+}
+.infos_user_commentaire p{
+    margin: 0;
+    font-weight: bold;
+    font-family: 'Kaushan Script', cursive;
+}
+.le_commentaire p{
+    margin: 0;
+    margin-top: 5px;
+    margin-left: 5px;
+}
 .infos_un_livre p{
     font-family: 'Yatra One';
     font-size: 16px;

@@ -17,15 +17,15 @@ class livresController {
         }
     }
 
-    public function likelivreAction($args) {
+    public function livreslikeAction($args) {
         if (!empty($_GET['user_profile'])) {
-            $like_livre = setLivres_Likes($_GET['livre_id'], $_GET['user_profile'], date("d/m/y:H:i:s", strtotime("now")), $_GET['like']);
+            $like_livre = setLivres_Likes($_GET['element_one'], $_GET['user_profile'], date("d/m/y:H:i:s", strtotime("now")), $_GET['element_two']);
         }
     }
 
-    public function favorislivreAction($args) {
+    public function livresfavoriteAction($args) {
         if (!empty($_GET['user_profile'])) {
-            $favorite_livre = setLivres_Favorite($_GET['livre_id'], $_GET['user_profile'], date("d/m/y:H:i:s", strtotime("now")), $_GET['favorite']);
+            $favorite_livre = setLivres_Favorite($_GET['element_one'], $_GET['user_profile'], date("d/m/y:H:i:s", strtotime("now")), $_GET['element_two']);
         }
     }
 
