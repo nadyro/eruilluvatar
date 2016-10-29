@@ -5,8 +5,6 @@ class livresController {
     public function indexAction($args) {
         $v = new view();
         $v->setView("livres/afficher");
-//        var_dump($_COOKIE);
-//        die();
         $un_livre = getAllLivres(0, $_GET['post_id_livre']);
         $v->assign("un_livre", $un_livre);
         $livre_like = getLivres_Likes($_GET['post_id_livre'], $_COOKIE['cookie_users']);
@@ -20,11 +18,15 @@ class livresController {
     }
 
     public function likelivreAction($args) {
-        $like_livre = setLivres_Likes($_GET['livre_id'], $_GET['user_profile'], date("d/m/y:H:i:s", strtotime("now")), $_GET['like']);
+        if (!empty($_GET['user_profile'])) {
+            $like_livre = setLivres_Likes($_GET['livre_id'], $_GET['user_profile'], date("d/m/y:H:i:s", strtotime("now")), $_GET['like']);
+        }
     }
 
     public function favorislivreAction($args) {
-        $favorite_livre = setLivres_Favorite($_GET['livre_id'], $_GET['user_profile'], date("d/m/y:H:i:s", strtotime("now")), $_GET['favorite']);
+        if (!empty($_GET['user_profile'])) {
+            $favorite_livre = setLivres_Favorite($_GET['livre_id'], $_GET['user_profile'], date("d/m/y:H:i:s", strtotime("now")), $_GET['favorite']);
+        }
     }
 
     public function modifierlivresAction() {

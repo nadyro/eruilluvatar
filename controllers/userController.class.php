@@ -37,7 +37,7 @@ class userController {
             if ($_GET['password_connexion'] !== $user[0]['password_user']) {
                 echo 2;
             } else {
-                echo "Bienvenue " . $user[0]['prenom_user'] . " ! C'est un plaisir de vous revoir !";
+                echo $user[0]['id'];
                 session_start();
                 $_SESSION['user'] = array("id" => $user[0]['id'], "nom_user" => $user[0]['nom_user'], "prenom_user" => $user[0]['prenom_user'],
                     "email_user" => $user[0]['email_user'], "birth_date_user" => $user[0]['birth_date_user'], "password_user" => $user[0]['password_user'],

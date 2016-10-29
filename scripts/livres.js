@@ -6,22 +6,27 @@
 $(document).ready(function () {
 
     function ajax_like_request(livre_id, like, user_profile) {
-        $.ajax({
-            url: "/myproject/livres/likelivre",
-            type: "GET",
-            data: {
-                livre_id: livre_id,
-                like: like,
-                user_profile: user_profile
-            },
-            complete: function () {
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-            }
-        });
+        if (user_profile !== "null") {
+            $.ajax({
+                url: "/myproject/livres/likelivre",
+                type: "GET",
+                data: {
+                    livre_id: livre_id,
+                    like: like,
+                    user_profile: user_profile
+                },
+                complete: function () {
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                }
+            });
+        } else {
+            alert("Vous devez être connecté pour intéragir avec les livres ! :(");
+        }
+
     }
 
     function ajax_favorite_request(livre_id, favorite, user_profile) {
@@ -66,37 +71,38 @@ $(document).ready(function () {
             var like = $(this).attr("like");
             var favorite = $(this).attr("favorite");
             var user_profile = readCookie("cookie_users");
-            if ($(this).hasClass("loved_png")) {
-                $(this).hide(1000).css({
-                    opacity: "0"
-                });
-                $(".second_loved_png").show(1000).css({
-                    opacity: "0.8",
-                    display: "inline-block"
-                });
-                ajax_like_request(livre_id, like, user_profile);
+            ajax_like_request(livre_id, like, user_profile);
+            ajax_favorite_request(livre_id, favorite, user_profile);
+            if (user_profile !== "null") {
+                if ($(this).hasClass("loved_png")) {
+                    $(this).hide(1000).css({
+                        opacity: "0"
+                    });
+                    $(".second_loved_png").show(1000).css({
+                        opacity: "0.8",
+                        display: "inline-block"
+                    });
+                }
+                if ($(this).hasClass("comment_png")) {
+                    $(this).hide(1000).css({
+                        opacity: "0"
+                    });
+                    $(".second_comment_png").show(1000).css({
+                        opacity: "0.8",
+                        display: "inline-block"
+                    });
+                    ajax_like_request(livre_id, like, user_profile);
+                }
+                if ($(this).hasClass("favorite_png")) {
+                    $(this).hide(1000).css({
+                        opacity: "0"
+                    });
+                    $(".second_favorite_png").show(1000).css({
+                        opacity: "0.8",
+                        display: "inline-block"
+                    });
+                }
             }
-            if ($(this).hasClass("comment_png")) {
-                $(this).hide(1000).css({
-                    opacity: "0"
-                });
-                $(".second_comment_png").show(1000).css({
-                    opacity: "0.8",
-                    display: "inline-block"
-                });
-                ajax_like_request(livre_id, like, user_profile);
-            }
-            if ($(this).hasClass("favorite_png")) {
-                $(this).hide(1000).css({
-                    opacity: "0"
-                });
-                $(".second_favorite_png").show(1000).css({
-                    opacity: "0.8",
-                    display: "inline-block"
-                });
-                ajax_favorite_request(livre_id, favorite, user_profile);
-            }
-
         });
     });
 //    $(".tool_img_livre_affiche img").hover(function(){
@@ -114,37 +120,38 @@ $(document).ready(function () {
             var like = $(this).attr("like");
             var favorite = $(this).attr("favorite");
             var user_profile = readCookie("cookie_users");
-            if ($(this).hasClass("second_loved_png")) {
-                $(this).hide(1000).css({
-                    opacity: "0"
-                });
-                $(".loved_png").show(1000).css({
-                    opacity: "0.8",
-                    display: "inline-block"
-                });
-                ajax_like_request(livre_id, like, user_profile);
+            if (user_profile !== "null") {
+                if ($(this).hasClass("second_loved_png")) {
+                    $(this).hide(1000).css({
+                        opacity: "0"
+                    });
+                    $(".loved_png").show(1000).css({
+                        opacity: "0.8",
+                        display: "inline-block"
+                    });
+                    ajax_like_request(livre_id, like, user_profile);
+                }
+                if ($(this).hasClass("second_comment_png")) {
+                    $(this).hide(1000).css({
+                        opacity: "0"
+                    });
+                    $(".comment_png").show(1000).css({
+                        opacity: "0.8",
+                        display: "inline-block"
+                    });
+                    ajax_like_request(livre_id, like, user_profile);
+                }
+                if ($(this).hasClass("second_favorite_png")) {
+                    $(this).hide(1000).css({
+                        opacity: "0"
+                    });
+                    $(".favorite_png").show(1000).css({
+                        opacity: "0.8",
+                        display: "inline-block"
+                    });
+                    ajax_favorite_request(livre_id, favorite, user_profile);
+                }
             }
-            if ($(this).hasClass("second_comment_png")) {
-                $(this).hide(1000).css({
-                    opacity: "0"
-                });
-                $(".comment_png").show(1000).css({
-                    opacity: "0.8",
-                    display: "inline-block"
-                });
-                ajax_like_request(livre_id, like, user_profile);
-            }
-            if ($(this).hasClass("second_favorite_png")) {
-                $(this).hide(1000).css({
-                    opacity: "0"
-                });
-                $(".favorite_png").show(1000).css({
-                    opacity: "0.8",
-                    display: "inline-block"
-                });
-                ajax_favorite_request(livre_id, favorite, user_profile);
-            }
-
         });
     });
 
@@ -279,6 +286,5 @@ function readCookie(name) {
 }
 
 function eraseCookie(name) {
-    createCookie(name, "", -1);
+    createCookie(name, null, "Thu, 01 Jan 1970 00:00:00 UTC");
 }
-

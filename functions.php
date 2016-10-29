@@ -1,8 +1,10 @@
 <?php
+
 set_data();
+
 function set_data() {
     global $pdo;
-    $dsn = "mysql:dbname=".DBNAME.";host=".DBHOST."";
+    $dsn = "mysql:dbname=" . DBNAME . ";host=" . DBHOST . "";
     $dbuser = DBUSER;
     $dbpwd = DBPWD;
     try {
@@ -111,34 +113,41 @@ function getAllLivres($id_genre = 0, $id_livre = 0, $id_user = 0) {
 
 function getLivres_Likes($id_livre = 0, $id_user = 0) {
     global $pdo;
-    $query = $pdo->prepare("SELECT ll.id_user, count(l.id) AS nb_livre_like, sum(ll.nb_likes) AS sum_livre_like FROM livres l JOIN livres_likes ll ON(ll.id_livre = l.id) WHERE l.id = :id AND ll.id_user = :id_user ORDER BY date_parution DESC");
-//    var_dump($query);
-//    die();
-    $query->execute(array("id" => $id_livre, "id_user" => $id_user));
-    $row = $query->fetchAll(PDO::FETCH_ASSOC);
-    return $row;
+    if ($id_user != "null") {
+        $query = $pdo->prepare("SELECT ll.id_user, count(l.id) AS nb_livre_like, sum(ll.nb_likes) AS sum_livre_like FROM livres l JOIN livres_likes ll ON(ll.id_livre = l.id) WHERE l.id = :id AND ll.id_user = :id_user ORDER BY date_parution DESC");
+        $query->execute(array("id" => $id_livre, "id_user" => $id_user));
+        $row = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $row;
+    }
 }
 
 function getLivres_Favorite($id_livre = 0, $id_user = 0) {
     global $pdo;
-    $query = $pdo->prepare("SELECT lf.id_user, sum(lf.favorite) AS sum_livre_favorite FROM livres l JOIN livres_favorite lf ON(lf.id_livre = l.id) WHERE l.id = :id AND lf.id_user = :id_user ORDER BY date_parution DESC");
-    $query->execute(array("id" => $id_livre, "id_user" => $id_user));
-    $row = $query->fetchAll(PDO::FETCH_ASSOC);
-    return $row;
+    if ($id_user != "null") {
+        $query = $pdo->prepare("SELECT lf.id_user, sum(lf.favorite) AS sum_livre_favorite FROM livres l JOIN livres_favorite lf ON(lf.id_livre = l.id) WHERE l.id = :id AND lf.id_user = :id_user ORDER BY date_parution DESC");
+        $query->execute(array("id" => $id_livre, "id_user" => $id_user));
+        $row = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $row;
+    }
 }
+
 //SELECT * FROM livres l JOIN livres_likes ll ON(ll.id_livre = l.id) WHERE l.id = :id ORDER BY date_parution DESC
 function setLivres_Likes($id_livre, $user_profile, $date = "", $nb_likes) {
     global $pdo;
-    $sql = "INSERT INTO livres_likes (id_livre, id_user, date_like, nb_likes) VALUES ('$id_livre', '$user_profile', '$date', '$nb_likes')";
-    $query = $pdo->prepare($sql);
-    $query->execute();
+    if ($user_profile != "null") {
+        $sql = "INSERT INTO livres_likes (id_livre, id_user, date_like, nb_likes) VALUES ('$id_livre', '$user_profile', '$date', '$nb_likes')";
+        $query = $pdo->prepare($sql);
+        $query->execute();
+    }
 }
 
 function setLivres_Favorite($id_livre, $user_profile, $date = "", $favorite) {
     global $pdo;
-    $sql = "INSERT INTO livres_favorite (id_livre, id_user, date_favorite, favorite) VALUES ('$id_livre', '$user_profile', '$date', '$favorite')";
-    $query = $pdo->prepare($sql);
-    $query->execute();
+    if ($user_profile != "null") {
+        $sql = "INSERT INTO livres_favorite (id_livre, id_user, date_favorite, favorite) VALUES ('$id_livre', '$user_profile', '$date', '$favorite')";
+        $query = $pdo->prepare($sql);
+        $query->execute();
+    }
 }
 
 function getLibelleGenre_By_IdLivre($id_livre, $id_genre) {
