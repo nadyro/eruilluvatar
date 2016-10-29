@@ -18,7 +18,6 @@ if (!empty($_SESSION)) {
         <meta charset="UTF-8">
         <title>Euphème</title>
         <meta name="description" content="description de ma page">
-        <link rel="stylesheet" href="<?php echo $global_url_src ?>/farbtastic/farbtastic.css" type="text/css" />
         <?php if (!$detect->isMobile() && !$detect->isTablet()) { ?>
             <link rel="stylesheet" href="<?php echo $global_url_src ?>/styles/style_template.css" />
             <link rel="stylesheet" href="<?php echo $global_url_src ?>/styles/index_index.css" />
@@ -33,7 +32,6 @@ if (!empty($_SESSION)) {
         <script type="text/javascript" src="<?php echo $global_url_src ?>/scripts/userprofile.js"></script>
         <script type="text/javascript" src="<?php echo $global_url_src ?>/scripts/suggestions.js"></script>
         <script type="text/javascript" src="<?php echo $global_url_src ?>/scripts/livres.js"></script>
-        <script type="text/javascript" src="<?php echo $global_url_src ?>/farbtastic/farbtastic.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Yatra+One" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
 
