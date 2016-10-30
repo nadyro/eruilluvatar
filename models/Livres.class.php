@@ -15,6 +15,7 @@ class Livres extends Base_SQL {
 
     public $id;
     public $id_user;
+    public $id_type;
     public $titre;
     public $nom_auteur;
     public $collection;
@@ -30,6 +31,10 @@ class Livres extends Base_SQL {
 
     function getId_user() {
         return $this->id_user;
+    }
+
+    function getId_type() {
+        return $this->id_type;
     }
 
     function getTitre() {
@@ -70,6 +75,10 @@ class Livres extends Base_SQL {
 
     function setId_user($id_user) {
         $this->id_user = $id_user;
+    }
+
+    function setId_type($id_type) {
+        $this->id_type = $id_type;
     }
 
     function setTitre($titre) {

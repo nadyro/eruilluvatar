@@ -54,17 +54,7 @@ class Base_SQL {
             foreach ($cols as $key => $value) {
                 $data[$value] = $this->$value;
             }
-
             $query->execute($data);
         }
     }
-
-    public function getUser($email) {
-        $query = $this->pdo->prepare("SELECT u.*, m.lien as photo, m.libelle as alt FROM user u, media m WHERE u.id_media = m.id AND email = :email;");
-        $query->execute(array('email' => $email));
-        $row = $query->fetch();
-
-        return $row;
-    }
-
 }

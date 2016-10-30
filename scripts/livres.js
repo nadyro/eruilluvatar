@@ -5,21 +5,21 @@
  */
 $(document).ready(function () {
     if ($("#un_livre_like_negatif").val() == -1) {
-        $('.second_loved_png').hide();
-        $('.loved_png').show();
+        $('.like_favorite_png.second_loved_png').hide();
+        $('.like_favorite_png.loved_png').show();
     }
     if ($("#un_livre_like_positif").val() == 1) {
-        $('.second_loved_png').show();
-        $('.loved_png').hide();
+        $('.like_favorite_png.second_loved_png').show();
+        $('.like_favorite_png.loved_png').hide();
     }
 
     if ($("#un_livre_favorite_negatif").val() == -1) {
-        $('.second_favorite_png').hide();
-        $('.favorite_png').show();
+        $('.like_favorite_png.second_favorite_png').hide();
+        $('.like_favorite_png.favorite_png').show();
     }
     if ($("#un_livre_favorite_positif").val() == 1) {
-        $('.second_favorite_png').show();
-        $('.favorite_png').hide();
+        $('.like_favorite_png.second_favorite_png').show();
+        $('.like_favorite_png.favorite_png').hide();
     }
     $(".like_favorite_png").each(function () {
         $(this).click(function () {
@@ -28,15 +28,58 @@ $(document).ready(function () {
             var favorite = $(this).attr("favorite");
             var user_profile = readCookie("cookie_users");
             var element_type = $(this).attr("element-type");
+            var post_id = $(this).attr("post-id");
             if (user_profile !== "null") {
                 if (element_type == "like") {
-                    like_favorite_element("like_favorite_png", "livres", element_type, livre_id, like, user_profile);
+                    like_favorite_element("like_favorite_png", "livres", element_type, livre_id, like, user_profile,1, post_id);
                 }
                 if (element_type == "favorite") {
-                    like_favorite_element("like_favorite_png", "livres", element_type, livre_id, favorite, user_profile);
+                    like_favorite_element("like_favorite_png", "livres", element_type, livre_id, favorite, user_profile,1, post_id);
                 }
             }
         });
+    });
+    
+    $(".comment_png").each(function(){
+       $(this).click(function(){
+          var id_element = $(this).attr("id_element");
+          var like = $(this).attr("like");
+          var user_profile = readCookie("cookie_users");
+          var element_type = $(this).attr("element-type");
+          var post_id = $(this).attr("post-id");
+          if(user_profile !== "null"){
+                like_favorite_element("comment_png", "livres", element_type, id_element, like, user_profile,2, post_id);
+          }
+       });
+    });
+
+    $(".ecrire_commentaire_comment_png").click(function () {
+        $(".ecrire_commentaire").show(1000);
+        $(this).hide(1000).css({
+            opacity: "0"
+        });
+        $(".ecrire_commentaire_second_comment_png").show(1000).css({
+            opacity: "0.8",
+            display: "inline-block"
+        });
+    });
+
+    $(".ecrire_commentaire_second_comment_png").click(function () {
+        $(".ecrire_commentaire").hide(1000);
+        $(this).hide(1000).css({
+            opacity: "0"
+        });
+        $(".ecrire_commentaire_comment_png").show(1000).css({
+            opacity: "0.8",
+            display: "inline-block"
+        });
+    });
+
+    $(".submit_commentaire").click(function () {
+        var id_user = readCookie("cookie_users");
+        var id_element = $(this).attr("id_element");
+        var valeur = $(".text_commentaire").val();
+        ecrire_commentaire(id_user, id_element, valeur);
     });
 
     $(".overlay_img_livre").each(function () {

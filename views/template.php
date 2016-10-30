@@ -30,6 +30,7 @@ $header_sentence_text = getHeaderSentence();
         <script type="text/javascript" src="<?php echo $global_url_src ?>/scripts/suggestions.js"></script>
         <script type="text/javascript" src="<?php echo $global_url_src ?>/scripts/livres.js"></script>
         <script type="text/javascript" src="<?php echo $global_url_src ?>/scripts/functions.js"></script>
+        <script type="text/javascript" src="<?php echo $global_url_src ?>/scripts/commentaire.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Yatra+One" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
 

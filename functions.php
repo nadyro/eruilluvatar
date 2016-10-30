@@ -47,6 +47,15 @@ function print_date($date_deb, $date_fin) {
     return "Du " . date("d/m/Y", strtotime($date_deb)) . " au " . date("d/m/Y", strtotime($date_fin));
 }
 
+function check($dt) {
+    $date = date("Y-m-d H:i:s");
+    $start = new DateTime($date);
+    $end = new DateTime($dt);
+    $diff = $start->diff($end);
+
+    return $diff->format('%h')+1;
+}
+
 function is_logged_in() {
     return !empty($_SESSION['user']);
 }
@@ -132,12 +141,10 @@ function getLivres_Favorite($id_livre = 0, $id_user = 0) {
 }
 
 //SELECT * FROM livres l JOIN livres_likes ll ON(ll.id_livre = l.id) WHERE l.id = :id ORDER BY date_parution DESC
-function setLivres_Likes($id_livre, $user_profile, $date = "", $nb_likes) {
+function setLivres_Likes($id_livre, $user_profile, $date = "", $nb_likes, $id_type) {
     global $pdo;
     if ($user_profile != "null") {
-        $sql = "INSERT INTO livres_likes (id_livre, id_user, date_like, nb_likes) VALUES ('$id_livre', '$user_profile', '$date', '$nb_likes')";
-//        var_dump($sql);
-//        die();
+        $sql = "INSERT INTO livres_likes (id_livre, id_user, date_like, nb_likes, id_type) VALUES ('$id_livre', '$user_profile', '$date', '$nb_likes', '$id_type')";
         $query = $pdo->prepare($sql);
         $query->execute();
     }
@@ -150,6 +157,24 @@ function setLivres_Favorite($id_livre, $user_profile, $date = "", $favorite) {
         $query = $pdo->prepare($sql);
         $query->execute();
     }
+}
+
+function getCommentaires($id_element) {
+    global $pdo;
+    $sql = "SELECT c.*, u.nom_user, u.prenom_user FROM commentaires c"
+            . " JOIN user u ON(u.id = c.id_user)"
+            . " WHERE c.id_type_element = :id_element";
+    $query = $pdo->prepare($sql);
+    $query->execute(array("id_element" => $id_element));
+    $row = $query->fetchAll(PDO::FETCH_ASSOC);
+    return $row;
+}
+
+function insertUser_Commentaire($id_user, $id_element, $id_type) {
+    global $pdo;
+    $sql = "INSERT INTO user_commentaire(id_user, id_element, id_type, date_ajout) VALUES ('$id_user', '$id_element', $id_type, NOW())";
+    $query = $pdo->prepare($sql);
+    $query->execute();
 }
 
 function getLibelleGenre_By_IdLivre($id_livre, $id_genre) {

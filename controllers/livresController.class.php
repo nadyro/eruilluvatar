@@ -15,11 +15,18 @@ class livresController {
         if (!empty($livre_favorite)) {
             $v->assign("livre_favorite", $livre_favorite);
         }
+
+        $commentaires = getCommentaires($_GET['post_id_livre']);
+        if (!empty($commentaires)) {
+//            var_dump($commentaires);
+//            die();
+            $v->assign("commentaires", $commentaires);
+        }
     }
 
     public function livreslikeAction($args) {
         if (!empty($_GET['user_profile'])) {
-            $like_livre = setLivres_Likes($_GET['element_one'], $_GET['user_profile'], date("d/m/y:H:i:s", strtotime("now")), $_GET['element_two']);
+            $like_livre = setLivres_Likes($_GET['element_one'], $_GET['user_profile'], date("d/m/y:H:i:s", strtotime("now")), $_GET['element_two'], $_GET['id_type']);
         }
     }
 
@@ -112,6 +119,7 @@ class livresController {
                     $livres = new Livres();
                     $livres->setId($_POST['id_livre']);
                     $livres->setId_user($_GET['profile_livre']);
+                    $livres->setId_type(1);
                     $livres->setTitre($_POST['titre_livre']);
                     $livres->setNom_auteur($_POST['nom_auteur_livre']);
                     $livres->setCollection($_POST['collection_livre']);
@@ -204,6 +212,7 @@ class livresController {
                     }
                     $livres = new Livres();
                     $livres->setId_user($_POST['id_user_livre']);
+                    $livres->setId_type(1);
                     $livres->setTitre($_POST['titre_livre']);
                     $livres->setNom_auteur($_POST['nom_auteur_livre']);
                     $livres->setCollection($_POST['collection_livre']);
