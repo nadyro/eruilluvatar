@@ -7,7 +7,7 @@ class livresController {
         $v->setView("livres/afficher");
         $un_livre = getAllLivres(0, $_GET['post_id_livre']);
         $v->assign("un_livre", $un_livre);
-        $livre_like = getLivres_Likes($_GET['post_id_livre'], $_COOKIE['cookie_users']);
+        $livre_like = getLivres_Likes($_GET['post_id_livre'], $_COOKIE['cookie_users'], 1);
         if (!empty($livre_like)) {
             $v->assign("livre_like", $livre_like);
         }
@@ -18,9 +18,14 @@ class livresController {
 
         $commentaires = getCommentaires($_GET['post_id_livre']);
         if (!empty($commentaires)) {
-//            var_dump($commentaires);
-//            die();
             $v->assign("commentaires", $commentaires);
+        }
+        $commentaires_like = getCommentaires_Likes($_GET['post_id_livre'], $_COOKIE['cookie_users'], 2);
+//        var_dump($commentaires_like);
+//        die();
+//        $com_test = test_commentaires_likes($_GET['post_id_livre'], $_COOKIE['cookie_users'], 2);
+        if (!empty($commentaires_like)) {
+            $v->assign("commentaires_like", $commentaires_like);
         }
     }
 

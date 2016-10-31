@@ -53,7 +53,7 @@ function check($dt) {
     $end = new DateTime($dt);
     $diff = $start->diff($end);
 
-    return $diff->format('%h')+1;
+    return $diff->format('%h') + 1;
 }
 
 function is_logged_in() {
@@ -120,11 +120,11 @@ function getAllLivres($id_genre = 0, $id_livre = 0, $id_user = 0) {
     return $row;
 }
 
-function getLivres_Likes($id_livre = 0, $id_user = 0) {
+function getLivres_Likes($id_livre = 0, $id_user = 0, $id_type = 0) {
     global $pdo;
     if ($id_user != "null") {
-        $query = $pdo->prepare("SELECT ll.id_user, count(l.id) AS nb_livre_like, sum(ll.nb_likes) AS sum_livre_like FROM livres l JOIN livres_likes ll ON(ll.id_livre = l.id) WHERE l.id = :id AND ll.id_user = :id_user ORDER BY date_parution DESC");
-        $query->execute(array("id" => $id_livre, "id_user" => $id_user));
+        $query = $pdo->prepare("SELECT ll.id_user, count(l.id) AS nb_livre_like, sum(ll.nb_likes) AS sum_livre_like FROM livres l JOIN livres_likes ll ON(ll.id_livre = l.id) WHERE l.id = :id AND ll.id_user = :id_user AND ll.id_type = :id_type ORDER BY date_parution DESC");
+        $query->execute(array("id" => $id_livre, "id_user" => $id_user, "id_type" => $id_type));
         $row = $query->fetchAll(PDO::FETCH_ASSOC);
         return $row;
     }
@@ -137,6 +137,37 @@ function getLivres_Favorite($id_livre = 0, $id_user = 0) {
         $query->execute(array("id" => $id_livre, "id_user" => $id_user));
         $row = $query->fetchAll(PDO::FETCH_ASSOC);
         return $row;
+    }
+}
+
+function getCommentaires_Likes($id_commentaire = 0, $id_user = 0, $id_type = 0) {
+    global $pdo;
+    if ($id_user != "null") {
+        $query = $pdo->prepare("SELECT id FROM commentaires WHERE id_type_element = :id_type_element");
+        $query->execute(array("id_type_element" => $id_commentaire));
+        $row = $query->fetchAll(PDO::FETCH_ASSOC);
+        $big_row = array();
+        foreach ($row as $kk => $vv) {
+            $queryy = $pdo->prepare("SELECT c.id, cl.id_user, sum(cl.nb_likes) AS sum_commentaires_like FROM livres l JOIN commentaires c ON(c.id_type_element = l.id) JOIN commentaires_likes cl ON(cl.id_commentaire = c.id) WHERE l.id = :id AND cl.id_user = :id_user AND cl.id_type = :id_type AND c.id = :id_com ");
+            $queryy->execute(array("id" => $id_commentaire, "id_user" => $id_user, "id_type" => $id_type, "id_com" => $vv['id']));
+            $roww = $queryy->fetchAll(PDO::FETCH_ASSOC);
+            $big_row[$vv['id']] = $roww;
+        }
+        return $big_row;
+    }
+}
+
+function test_commentaires_likes($id_commentaire = 0, $id_user = 0, $id_type = 0) {
+    global $pdo;
+    $query = $pdo->prepare("SELECT id FROM commentaires WHERE id_type_element = 23");
+    $query->execute();
+    $row = $query->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($row as $kk => $vv) {
+        $queryy = $pdo->prepare("SELECT c.id, cl.id_user, cl.nb_likes AS sum_commentaires_like FROM livres l JOIN commentaires c ON(c.id_type_element = l.id) JOIN commentaires_likes cl ON(cl.id_commentaire = c.id) WHERE l.id = :id AND cl.id_user = :id_user AND c.id = :id_com AND cl.id_type = :id_type");
+        var_dump($queryy);
+        die();
+        $queryy->execute(array("id" => $id_commentaire, "id_user" => $id_user, "id_type" => $id_type, "id_com" => $vv['id']));
+        $roww = $queryy->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
@@ -154,6 +185,15 @@ function setLivres_Favorite($id_livre, $user_profile, $date = "", $favorite) {
     global $pdo;
     if ($user_profile != "null") {
         $sql = "INSERT INTO livres_favorite (id_livre, id_user, date_favorite, favorite) VALUES ('$id_livre', '$user_profile', '$date', '$favorite')";
+        $query = $pdo->prepare($sql);
+        $query->execute();
+    }
+}
+
+function setCommentaires_Likes($id_commentaire, $user_profile, $date = "", $nb_likes, $id_type) {
+    global $pdo;
+    if ($user_profile != "null") {
+        $sql = "INSERT INTO commentaires_likes (id_commentaire, id_user, date_like, nb_likes, id_type) VALUES ('$id_commentaire', '$user_profile', '$date', '$nb_likes', '$id_type')";
         $query = $pdo->prepare($sql);
         $query->execute();
     }
