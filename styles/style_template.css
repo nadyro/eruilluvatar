@@ -54,7 +54,7 @@ a{
     top: 20px;
     color: white;
 }
-.renseigner_header_sentence, .connexion_header, .inscription_header, .deconnexion_header, .user_header{
+.renseigner_header_sentence, .connexion_header, .inscription_header, .deconnexion_header, .user_header, .notification{
     color: white;
     text-align: right;
     position: relative;
@@ -65,6 +65,7 @@ a{
     cursor: pointer;
     transition: 2s;
     border-width: 1px;
+    display: inline-block;
 }
 .header_buttons{
     z-index: 10000;
@@ -72,21 +73,6 @@ a{
     top: 0;
     right: 0;
 }
-.renseigner_header_sentence, .connexion_header,.deconnexion_header,.user_header,.inscription_header {
-    display: inline-block;
-}
-/*.connexion_header{
-    right: 130px;
-}
-.deconnexion_header{
-    right: 230px;
-}
-.user_header{
-    right: 130px;
-}
-.inscription_header{
-    right: 230px;
-}*/
 .renseigner_header_sentence:hover, .inscription_header:hover, .connexion_header:hover, .deconnexion_header:hover, .user_header:hover{
     background-color: white;
     transition: 2s;
@@ -219,4 +205,20 @@ a{
 .all{
     height: auto;
     /*background: rgba(0,0,0,0.3);*/
+}
+.les_notifications{
+    position: absolute;
+    color: white;
+    right: 0;
+    margin-top: 10px;
+    background-color: rgba(0,0,0,0.9);
+    padding: 20px;
+    z-index: 10000;
+    display: none;
+}
+.une_notif{
+    padding: 5px;
+}
+.date_notification{
+    text-align: right;
 }

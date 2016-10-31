@@ -28,7 +28,6 @@ class commentairesController {
 
     public function commentaireslikeAction($args) {
         if (!empty($_GET['user_profile'])) {
-//            var_dump($_GET);
             $like_commentaires = setCommentaires_Likes($_GET['element_one'], $_GET['user_profile'], date("d/m/y:H:i:s", strtotime("now")), $_GET['element_two'], $_GET['id_type']);
         }
     }

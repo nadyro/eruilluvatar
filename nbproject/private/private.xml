@@ -3,14 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp64/www/myproject/controllers/commentairesController.class.php</file>
             <file>file:/C:/wamp64/www/myproject/functions.php</file>
+            <file>file:/C:/wamp64/www/myproject/controllers/commentairesController.class.php</file>
             <file>file:/C:/wamp64/www/myproject/core/base_sql.class.php</file>
+            <file>file:/C:/wamp64/www/myproject/scripts/connexion_inscription_header.js</file>
             <file>file:/C:/wamp64/www/myproject/views/livres/afficher.php</file>
-            <file>file:/C:/wamp64/www/myproject/styles/livres.css</file>
             <file>file:/C:/wamp64/www/myproject/styles/index_index.css</file>
+            <file>file:/C:/wamp64/www/myproject/controllers/notificationController.class.php</file>
             <file>file:/C:/wamp64/www/myproject/scripts/functions.js</file>
-            <file>file:/C:/wamp64/www/myproject/models/Commentaires.class.php</file>
             <file>file:/C:/wamp64/www/myproject/models/Livres.class.php</file>
             <file>file:/C:/wamp64/www/myproject/scripts/livres.js</file>
             <file>file:/C:/wamp64/www/myproject/views/template.php</file>

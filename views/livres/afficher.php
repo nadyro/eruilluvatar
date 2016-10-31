@@ -37,14 +37,16 @@ if (!empty($livre_favorite)) {
 //    
 //}
 //echo $count_com;
-foreach ($commentaires_like as $des_commentaires_like => $un_commentaire_like) {
-    if (!empty($un_commentaire_like[0]['id_user'])) {
-        if ($un_commentaire_like[0]['sum_commentaires_like'] == 0 || $un_commentaire_like[0]['sum_commentaires_like'] == -1) {
-            ?>
-            <input type="hidden" value="-1" post-id="<?php echo $un_commentaire_like[0]['id'] ?>" class="un_livre_commentaire_like_negatif">
-        <?php } else { ?>
-            <input type="hidden" value="1" post-id="<?php echo $un_commentaire_like[0]['id'] ?>" class="un_livre_commentaire_like_positif">
-            <?php
+if (!empty($commentaires_like)) {
+    foreach ($commentaires_like as $des_commentaires_like => $un_commentaire_like) {
+        if (!empty($un_commentaire_like[0]['id_user'])) {
+            if ($un_commentaire_like[0]['sum_commentaires_like'] == 0 || $un_commentaire_like[0]['sum_commentaires_like'] == -1) {
+                ?>
+                <input type="hidden" value="-1" post-id="<?php echo $un_commentaire_like[0]['id'] ?>" class="un_livre_commentaire_like_negatif">
+            <?php } else { ?>
+                <input type="hidden" value="1" post-id="<?php echo $un_commentaire_like[0]['id'] ?>" class="un_livre_commentaire_like_positif">
+                <?php
+            }
         }
     }
 }
@@ -75,11 +77,11 @@ foreach ($commentaires_like as $des_commentaires_like => $un_commentaire_like) {
             <img src="<?php echo $global_url_src ?>/images/livres_images/<?php echo $un_livre[0]['image'] ?>" class="img_livre_affiche">
             <div class="overlay_img_livre_affiche">
                 <div class="first_tool_img_livre_affiche tool_img_livre_affiche">
-                    <?php // if (empty($_COOKIE['like_livre_user'])) {     ?>
+                    <?php // if (empty($_COOKIE['like_livre_user'])) {      ?>
                     <img src="<?php echo $global_url_src ?>/images/loved.png" alt="J'ai aimé ce livre" post-id="-1" livre-id="<?php echo $un_livre[0]['id'] ?>" element-type="like" like="1" class="like_favorite_png loved_png">
-                    <?php // } else{     ?>
+                    <?php // } else{      ?>
                     <img src="<?php echo $global_url_src ?>/images/loved_colored.png" alt="J'ai aimé ce livre" post-id="-1" livre-id="<?php echo $un_livre[0]['id'] ?>" element-type="like" like="-1" class="like_favorite_png second_loved_png second_img_livre_affiche">
-                    <?php // }        ?>
+<?php // }         ?>
                 </div>
                 <div class="second_tool_img_livre_affiche tool_img_livre_affiche">
                     <img src="<?php echo $global_url_src ?>/images/comment.png" alt="Commenter" class="ecrire_commentaire_comment_png base_img_livre_affiche">
@@ -113,12 +115,12 @@ foreach ($commentaires_like as $des_commentaires_like => $un_commentaire_like) {
                 <div class="commentaires_livre">
                     <div class="infos_user_commentaire">
                         <p>
-                            <?php echo $un_commentaire['nom_user'] . " " . $un_commentaire['prenom_user']; ?>
+        <?php echo $un_commentaire['nom_user'] . " " . $un_commentaire['prenom_user']; ?>
                         </p>
                     </div>
                     <div class="le_commentaire">
                         <p>
-                            <?php echo $un_commentaire['valeur']; ?>
+        <?php echo $un_commentaire['valeur']; ?>
                         </p>
                     </div>
                     <div class="like_commentaire">
@@ -126,7 +128,7 @@ foreach ($commentaires_like as $des_commentaires_like => $un_commentaire_like) {
                         <img src="<?php echo $global_url_src ?>/images/loved_colored.png" alt="J'ai aimé ce commentaire" id_commentaire="<?php echo $un_commentaire['id']; ?>" post-id="<?php echo $les_commentaires; ?>" id_element="<?php echo $un_livre[0]['id'] ?>" element-type="like" like="-1" class="comment_png second_loved_png second_img_livre_affiche">
                     </div>
                     <div class="date_commentaire">
-                        <?php echo ($check . "h"); ?>
+        <?php echo ($check); ?>
                     </div>
                 </div>
                 <?php

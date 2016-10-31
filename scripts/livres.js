@@ -21,19 +21,37 @@ $(document).ready(function () {
         $('.like_favorite_png.second_favorite_png').show();
         $('.like_favorite_png.favorite_png').hide();
     }
-    $(".un_livre_commentaire_like_positif").each(function(){
+    $(".un_livre_commentaire_like_positif").each(function () {
         var post_id_com = $(this).attr("post-id");
-        if($(".un_livre_commentaire_like_positif[post-id='"+post_id_com+"']").val() == 1){
-            $(".comment_png.second_loved_png[id_commentaire='"+post_id_com+"']").show();
-            $(".comment_png.loved_png[id_commentaire='"+post_id_com+"']").hide();
+        if ($(".un_livre_commentaire_like_positif[post-id='" + post_id_com + "']").val() == 1) {
+            $(".comment_png.second_loved_png[id_commentaire='" + post_id_com + "']").show();
+            $(".comment_png.loved_png[id_commentaire='" + post_id_com + "']").hide();
         }
     });
-    $(".un_livre_commentaire_like_negatif").each(function(){
+    $(".un_livre_commentaire_like_negatif").each(function () {
         var post_id_com = $(this).attr("post-id");
-        if($(".un_livre_commentaire_like_negatif[post-id='"+post_id_com+"']").val() == -1){
-            $(".comment_png.second_loved_png[post-id='"+post_id_com+"']").hide();
-            $(".comment_png.loved_png[post-id='"+post_id_com+"']").show();
+        if ($(".un_livre_commentaire_like_negatif[post-id='" + post_id_com + "']").val() == -1) {
+            $(".comment_png.second_loved_png[post-id='" + post_id_com + "']").hide();
+            $(".comment_png.loved_png[post-id='" + post_id_com + "']").show();
         }
+    });
+    var clicks = 0;
+    $(".notification").click(function () {
+        if (clicks === 0) {
+            clicks++;
+            $(".les_notifications").show("slow");
+            $(this).css({
+               "background-color" : "transparent" 
+            });
+            $(".nb_notification").text('');
+        } else {
+            clicks--;
+            $(".les_notifications").hide();
+        }
+        
+    });
+    $(".une_notif").click(function(){
+       alert("yo"); 
     });
 
     $(".like_favorite_png").each(function () {

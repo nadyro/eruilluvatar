@@ -52,8 +52,23 @@ function check($dt) {
     $start = new DateTime($date);
     $end = new DateTime($dt);
     $diff = $start->diff($end);
-
-    return $diff->format('%h') + 1;
+    $heure = 0;
+    if ($diff->format('%d') > 0) {
+        return $diff->format('%dj %hh');
+    }
+    if ($diff->format('%m') > 0) {
+        return $diff->format('%mm, %dj, %hh');
+    }
+    if ($diff->format('%y') > 0) {
+        return $diff->format('%yy');
+    }
+    if ($diff->format('%i') < 60 && $diff->format('%h') == 0) {
+        return 'Moins d\'une heure';
+    }
+    if ($diff->format('%h') > 0) {
+        $heure = $diff->format('%h') + 1;
+        return $heure . "h";
+    }
 }
 
 function is_logged_in() {
@@ -199,11 +214,50 @@ function setCommentaires_Likes($id_commentaire, $user_profile, $date = "", $nb_l
     }
 }
 
+function setNotification($id_element, $id_notifiant, $table) {
+    global $pdo;
+    $table_likes = rtrim($table, 's');
+    if (!empty($id_element)) {
+        $sql = "SELECT distinct table_t.*, u.nom_user, u.prenom_user FROM " . $table . " table_t JOIN user u ON(u.id = table_t.id_user) "
+                . " JOIN " . $table . "_likes table_likes ON(table_likes.id_" . $table_likes . " = table_t.id)"
+                . " WHERE table_likes.id_user = :id_notifiant AND table_t.id = :id_element";
+        $query = $pdo->prepare($sql);
+        $query->execute(array("id_notifiant" => $id_notifiant, "id_element" => $id_element));
+        $row = $query->fetchAll(PDO::FETCH_ASSOC);
+        if ($table == "commentaires") {
+            $sql_insert = 'INSERT INTO notification (id_element, id_user, id_user_notifiant, id_type, value, date_notification, id_type_element, nom_user, prenom_user) '
+                    . 'VALUES(' . $row[0]['id'] . ', ' . $row[0]['id_user'] . ', ' . $id_notifiant . ', ' . $row[0]['id_type'] . ', "' . $row[0]['valeur'] . '", NOW(), ' . $row[0]['id_type_element'] . ', '
+                    . '"' . $row[0]['nom_user'] . '", "' . $row[0]['prenom_user'] . '")';
+        } elseif ($table == "livres") {
+            $sql_insert = 'INSERT INTO notification (id_element, id_user, id_user_notifiant, id_type, value, date_notification, id_type_element,nom_user, prenom_user) '
+                    . 'VALUES(' . $row[0]['id'] . ', ' . $row[0]['id_user'] . ', ' . $id_notifiant . ', ' . $row[0]['id_type'] . ', "' . $row[0]['titre'] . '", NOW(), 0, '
+                    . '"' . $row[0]['nom_user'] . '", "' . $row[0]['prenom_user'] . '")';
+        }
+        $query_insert = $pdo->prepare($sql_insert);
+        $query_insert->execute();
+    }
+}
+
+function getNotification($id_user) {
+    global $pdo;
+    if (!empty($id_user)) {
+        $sql = "SELECT n.*, u.nom_user, u.prenom_user FROM notification n JOIN user u ON(u.id = n.id_user_notifiant) WHERE id_user = :id_user";
+        $query = $pdo->prepare($sql);
+        $query->execute(array("id_user" => $id_user));
+        $row = $query->fetchAll(PDO::FETCH_ASSOC);
+//        echo '<pre>';
+//        print_r($row);
+//        echo '</pre>';
+//        die();
+        return $row;
+    }
+}
+
 function getCommentaires($id_element) {
     global $pdo;
     $sql = "SELECT c.*, u.nom_user, u.prenom_user FROM commentaires c"
             . " JOIN user u ON(u.id = c.id_user)"
-            . " WHERE c.id_type_element = :id_element";
+            . " WHERE c.id_type_element = :id_element ORDER BY c.date_ajout DESC";
     $query = $pdo->prepare($sql);
     $query->execute(array("id_element" => $id_element));
     $row = $query->fetchAll(PDO::FETCH_ASSOC);

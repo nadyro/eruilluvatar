@@ -149,9 +149,12 @@ input[type="date"]{
 .infos_user_commentaire p{
     margin: 0;
     font-weight: bold;
-    font-family: 'Kaushan Script', cursive;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
 }
 .le_commentaire p{
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
     margin: 0;
     margin-top: 5px;
     margin-left: 5px;
@@ -266,12 +269,16 @@ label[for="img_livre"] img:hover{
     font-weight: normal;
     font-size: 12px;
     color: #90949c;
+    position: relative;
+    top: 10px;
+    left: -10px;
 }
 .like_commentaire{
     width: 10%;
+    position: relative;
 }
 .like_commentaire .comment_png{
-    width: 5%;
+    width: 60%;
     position: absolute;
     transform: translateY(-50%);
 }

@@ -2,8 +2,8 @@
 <?php
 session_start();
 
-require $_SERVER['DOCUMENT_ROOT']."/myproject/"."models/Headersentence.class.php";
-require $_SERVER['DOCUMENT_ROOT']."/myproject/"."Mobile_Detect/Mobile_Detect.php";
+require $_SERVER['DOCUMENT_ROOT'] . "/myproject/" . "models/Headersentence.class.php";
+require $_SERVER['DOCUMENT_ROOT'] . "/myproject/" . "Mobile_Detect/Mobile_Detect.php";
 $detect = new Mobile_Detect;
 global $global_url_src;
 $global_url_src = "http://" . $_SERVER["HTTP_HOST"] . "/myproject";
@@ -30,7 +30,6 @@ $header_sentence_text = getHeaderSentence();
         <script type="text/javascript" src="<?php echo $global_url_src ?>/scripts/suggestions.js"></script>
         <script type="text/javascript" src="<?php echo $global_url_src ?>/scripts/livres.js"></script>
         <script type="text/javascript" src="<?php echo $global_url_src ?>/scripts/functions.js"></script>
-        <script type="text/javascript" src="<?php echo $global_url_src ?>/scripts/commentaire.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Yatra+One" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
 
@@ -50,6 +49,9 @@ $header_sentence_text = getHeaderSentence();
                     </div>
                 <?php } ?>
                 <?php if (!empty($_SESSION)) { ?>
+                    <div class="notification">
+                        <p>Notification<span class="nb_notification"></span></p>
+                    </div>
                     <div class="deconnexion_header">
                         <p>Déconnexion</p>
                     </div>
@@ -63,6 +65,7 @@ $header_sentence_text = getHeaderSentence();
                     <p>New Sentence</p>
                 </div>
             </div>
+            <div class="les_notifications"></div>
             <ul class="liste_header_template">
                 <li>
                     <a href="<?php echo $global_url_src . "/suggestions/index" ?>">Suggestions</a> 
@@ -78,7 +81,7 @@ $header_sentence_text = getHeaderSentence();
             <?php foreach ($header_sentence_text as $key => $value) { ?>
                 <input type="hidden" value="<?php echo $value['text'] ?>" class="header_text_all header_text_<?php echo $key ?>">
             <?php } ?>
-            
+
             <div class="all_panels">
                 <!--Connexion-->
                 <div class="connexion_header_panel">
