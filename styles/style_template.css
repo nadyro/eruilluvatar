@@ -40,7 +40,7 @@ h1,h2{
     /*display: inline-block;*/
 }
 .liste_header_template a{
-    font-family: 'Yatra One';
+    /*font-family: 'Yatra One';*/
 }
 a{
     cursor: pointer;

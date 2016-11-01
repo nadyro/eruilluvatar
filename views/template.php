@@ -65,7 +65,10 @@ $header_sentence_text = getHeaderSentence();
                     <p>New Sentence</p>
                 </div>
             </div>
-            <div class="les_notifications"></div>
+            <div class="les_notifications">
+                <div class="une_notif"> 
+                </div>
+            </div>
             <ul class="liste_header_template">
                 <li>
                     <a href="<?php echo $global_url_src . "/suggestions/index" ?>">Suggestions</a> 

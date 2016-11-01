@@ -44,6 +44,7 @@ $(document).ready(function () {
                "background-color" : "transparent" 
             });
             $(".nb_notification").text('');
+            createCookie("notification_seen","1","Thu, 01 Jan 2100 00:00:00 UTC");
         } else {
             clicks--;
             $(".les_notifications").hide();
@@ -65,6 +66,7 @@ $(document).ready(function () {
             if (user_profile !== "null") {
                 if (element_type == "like") {
                     like_favorite_element("like_favorite_png", "livres", element_type, livre_id, like, user_profile, 1, post_id);
+                    getNotification(user_profile);
                 }
                 if (element_type == "favorite") {
                     like_favorite_element("like_favorite_png", "livres", element_type, livre_id, favorite, user_profile, 1, post_id);
@@ -82,13 +84,6 @@ $(document).ready(function () {
             if (user_profile !== "null") {
                 like_favorite_element("comment_png", "commentaires", element_type, id_element, like, user_profile, 2, post_id);
             }
-//            if ($(this).hasClass("loved_png")) {
-//                createCookie(post_id, "1", "Thu, 01 Jan 2100 00:00:00 UTC");
-//            }
-//            if ($(this).hasClass("second_loved_png")) {
-//                eraseCookie(post_id);
-//            }
-//            console.log(document.cookie);
         });
 
     });

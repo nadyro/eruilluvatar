@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    createCookie("nb_notif", -1, "Thu, 01 Jan 2100 00:00:00 UTC");
+    console.log(document.cookie);
     getNotification(readCookie("cookie_users"));
 });
 
@@ -99,51 +101,54 @@ function ecrire_commentaire(id_user, id_element, valeur) {
 }
 
 function getNotification(id_user) {
-    var y = 0;
+    var notification;
+    var length_notification;
     var interval = setInterval(function () {
         $.ajax({
             url: "/myproject/notification/affichenotification",
             type: "GET",
             dataType: 'json',
             data: {
-                user_profile: id_user
+                user_profile: id_user,
+                notification_seen: readCookie("notification_seen")
             },
-            complete: function (result) {  
+            complete: function (result) {
+                if (readCookie("notification_seen") == "1") {
+                    eraseCookie("notification_seen");
+                }
                 var i;
-                console.log(this.url);
-                var notification = jQuery.parseJSON(result.responseText);
-                
-                var length_notification = notification.length;
+                notification = jQuery.parseJSON(result.responseText);
+                console.log(notification);
+                length_notification = notification.length;
+                if (readCookie("nb_notif") == length_notification) {
+                    clearInterval(interval);
+                }
+                createCookie("nb_notif", length_notification, "Thu, 01 Jan 2100 00:00:00 UTC");
                 var type_notification = "";
                 if (length_notification > 0) {
                     $(".notification").css({
                         "background-color": "#fa3e3e"
                     });
-                    y++;
-                    console.log(y);
                     $(".notification .nb_notification").text("");
                     $(".notification .nb_notification").append("(" + length_notification + ")");
                 }
-                $(".les_notifications").text('');
+                $(".les_notifications .une_notif").text('');
                 for (i = 0; i < length_notification; i++) {
-                    if(notification[i].id_type == "2"){
+                    if (notification[i].id_type == "2") {
                         type_notification = "commentaire";
-                    }else{
+                    } else {
                         type_notification = "livre";
                     }
-//                    $(".les_notifications").text('');
-                    $(".les_notifications").append(
-                            "<div class='une_notif' post-id='"+notification[i].id+"'> "+notification[i].nom_user+" "+notification[i].prenom_user+" a aimé votre "+type_notification+" : '"+notification[i].value+"'\
-<div class='date_notification'>"+notification[i].date_notification+"</div></div>"
+                    $(".les_notifications .une_notif").append(
+                            " " + notification[i].nom_user + " " + notification[i].prenom_user + " a aimé votre " + type_notification + " : '" + notification[i].value + "'"
                             );
-//                    console.log(notification[i]);
-//                    console.log(notification[i].value);
-//                    console.log(notification[i].prenom_user);
+                    $(".les_notifications .une_notif").append("<div class='date_notification'>" + notification[i].date_notification + "</div>");
                 }
                 interval;
+                console.log(document.cookie);
             }
         });
-    }, 10000);
+    }, 2000);
 }
 
 function actualisation_requete_server(element_one, element_zero) {
@@ -157,7 +162,6 @@ function actualisation_requete_server(element_one, element_zero) {
             table: element_zero
         },
         complete: function (result) {
-
         }
     });
 }

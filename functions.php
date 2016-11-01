@@ -225,14 +225,18 @@ function setNotification($id_element, $id_notifiant, $table) {
         $query->execute(array("id_notifiant" => $id_notifiant, "id_element" => $id_element));
         $row = $query->fetchAll(PDO::FETCH_ASSOC);
         if ($table == "commentaires") {
-            $sql_insert = 'INSERT INTO notification (id_element, id_user, id_user_notifiant, id_type, value, date_notification, id_type_element, nom_user, prenom_user) '
+            $sql_insert = 'INSERT INTO notification (id_element, id_user, id_user_notifiant, id_type, value, date_notification, id_type_element, nom_user, prenom_user, archivage, seen) '
                     . 'VALUES(' . $row[0]['id'] . ', ' . $row[0]['id_user'] . ', ' . $id_notifiant . ', ' . $row[0]['id_type'] . ', "' . $row[0]['valeur'] . '", NOW(), ' . $row[0]['id_type_element'] . ', '
-                    . '"' . $row[0]['nom_user'] . '", "' . $row[0]['prenom_user'] . '")';
+                    . '"' . $row[0]['nom_user'] . '", "' . $row[0]['prenom_user'] . '", 0, 0)';
         } elseif ($table == "livres") {
             $sql_insert = 'INSERT INTO notification (id_element, id_user, id_user_notifiant, id_type, value, date_notification, id_type_element,nom_user, prenom_user) '
                     . 'VALUES(' . $row[0]['id'] . ', ' . $row[0]['id_user'] . ', ' . $id_notifiant . ', ' . $row[0]['id_type'] . ', "' . $row[0]['titre'] . '", NOW(), 0, '
-                    . '"' . $row[0]['nom_user'] . '", "' . $row[0]['prenom_user'] . '")';
+                    . '"' . $row[0]['nom_user'] . '", "' . $row[0]['prenom_user'] . '", 0, 0)';
         }
+//        echo '<pre>';
+//        print_r($sql_insert);
+//        echo '</pre>';
+//        die();
         $query_insert = $pdo->prepare($sql_insert);
         $query_insert->execute();
     }
@@ -241,15 +245,21 @@ function setNotification($id_element, $id_notifiant, $table) {
 function getNotification($id_user) {
     global $pdo;
     if (!empty($id_user)) {
-        $sql = "SELECT n.*, u.nom_user, u.prenom_user FROM notification n JOIN user u ON(u.id = n.id_user_notifiant) WHERE id_user = :id_user";
+        $sql = "SELECT n.*, u.nom_user, u.prenom_user FROM notification n JOIN user u ON(u.id = n.id_user_notifiant) WHERE id_user = :id_user AND n.archivage = 0 AND n.seen = 0";
         $query = $pdo->prepare($sql);
         $query->execute(array("id_user" => $id_user));
         $row = $query->fetchAll(PDO::FETCH_ASSOC);
-//        echo '<pre>';
-//        print_r($row);
-//        echo '</pre>';
-//        die();
         return $row;
+    }
+}
+
+function setNotification_seen($id_user, $notification_seen){
+    global $pdo;
+    
+    if(!empty($id_user)){
+        $sql = "UPDATE notification SET seen = ".$notification_seen." WHERE id_user = :id_user";
+        $query = $pdo->prepare($sql);
+        $query->execute(array("id_user" => $id_user));
     }
 }
 
