@@ -1,7 +1,8 @@
 $(document).ready(function () {
-    createCookie("nb_notif", -1, "Thu, 01 Jan 2100 00:00:00 UTC");
+//    createCookie("nb_notifs", -1, "Thu, 01 Jan 2100 00:00:00 UTC");
     console.log(document.cookie);
     getNotification(readCookie("cookie_users"));
+//    eraseCookie("nb_notifs");
 });
 
 
@@ -103,50 +104,77 @@ function ecrire_commentaire(id_user, id_element, valeur) {
 function getNotification(id_user) {
     var notification;
     var length_notification;
+    var isPaused = true;
+    var click = 1;
+    console.log(isPaused);
     var interval = setInterval(function () {
-        $.ajax({
-            url: "/myproject/notification/affichenotification",
-            type: "GET",
-            dataType: 'json',
-            data: {
-                user_profile: id_user,
-                notification_seen: readCookie("notification_seen")
-            },
-            complete: function (result) {
-                if (readCookie("notification_seen") == "1") {
-                    eraseCookie("notification_seen");
-                }
-                var i;
-                notification = jQuery.parseJSON(result.responseText);
-                console.log(notification);
-                length_notification = notification.length;
-                if (readCookie("nb_notif") == length_notification) {
-                    clearInterval(interval);
-                }
-                createCookie("nb_notif", length_notification, "Thu, 01 Jan 2100 00:00:00 UTC");
-                var type_notification = "";
-                if (length_notification > 0) {
-                    $(".notification").css({
-                        "background-color": "#fa3e3e"
-                    });
-                    $(".notification .nb_notification").text("");
-                    $(".notification .nb_notification").append("(" + length_notification + ")");
-                }
-                $(".les_notifications .une_notif").text('');
-                for (i = 0; i < length_notification; i++) {
-                    if (notification[i].id_type == "2") {
-                        type_notification = "commentaire";
-                    } else {
-                        type_notification = "livre";
+        if (isPaused) {
+            console.log(isPaused);
+            console.log(click);
+            $.ajax({
+                url: "/myproject/notification/affichenotification",
+                type: "GET",
+                dataType: 'json',
+                data: {
+                    user_profile: id_user,
+                    notification_seen: readCookie("notification_seen")
+                },
+                complete: function (result) {
+                    if (readCookie("notification_seen") == "1") {
+                        eraseCookie("notification_seen");
                     }
-                    $(".les_notifications .une_notif").append(
-                            " " + notification[i].nom_user + " " + notification[i].prenom_user + " a aimé votre " + type_notification + " : '" + notification[i].value + "'"
-                            );
-                    $(".les_notifications .une_notif").append("<div class='date_notification'>" + notification[i].date_notification + "</div>");
+                    var i;
+                    notification = jQuery.parseJSON(result.responseText);
+                    console.log(notification);
+                    length_notification = notification.length;
+//                if (readCookie("nb_notifs") == length_notification) {
+//                    clearInterval(interval);
+//                }
+                    createCookie("nb_notifs", length_notification, "Thu, 01 Jan 2100 00:00:00 UTC");
+                    var type_notification = "";
+                    if (length_notification > 0) {
+                        $(".notification").css({
+                            "background-color": "#fa3e3e"
+                        });
+                        $(".notification .nb_notification").text("");
+                        $(".notification .nb_notification").append("(" + length_notification + ")");
+                    }
+                    $(".les_notifications .une_notif").text('');
+                    for (i = 0; i < length_notification; i++) {
+                        if (notification[i].id_type == "2") {
+                            type_notification = "commentaire";
+                        } else {
+                            type_notification = "livre";
+                        }
+                        $(".les_notifications .une_notif").append(
+                                " " + notification[i].nom_user + " " + notification[i].prenom_user + " a aimé votre " + type_notification + " : '" + notification[i].value + "'"
+                                );
+                        $(".les_notifications .une_notif").append("<div class='date_notification'>" + notification[i].date_notification + "</div>");
+                    }
+                    interval;
+                    console.log(document.cookie);
                 }
-                interval;
-                console.log(document.cookie);
-            }
+            });
+        }
+        $(".notification").click(function (e) {
+            e.preventDefault();
+            isPaused = false;
+            $(this).hide();
+            $(".notification_close").css({
+                display : "inline-block",
+                position: "relative"
+            });
+            $(".les_notifications").show();
+        });
+        $(".notification_close").click(function(e){
+           e.preventDefault();
+           isPaused = true;
+           $(this).hide();
+           $(this).css({
+              position: "absolute" 
+           });
+           $(".les_notifications").hide();
+           $(".notification").show();
         });
     }, 2000);
 }

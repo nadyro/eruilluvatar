@@ -128,7 +128,8 @@ input[type="date"]{
 }
 .un_livre_first_half{
     background-color: rgba(0,0,0,0.7);
-    text-align: center;
+    text-align: left;
+    margin-left: 15px;
 }
 .commentaires_livre{
     width: 70%;
@@ -160,8 +161,9 @@ input[type="date"]{
     margin-left: 5px;
 }
 .infos_un_livre p{
-    font-family: 'Yatra One';
+    /*font-family: 'Yatra One';*/
     font-size: 16px;
+    margin-left: 20px;
 }
 .infos_un_livre p span{
     font-size: 18px;

@@ -54,7 +54,7 @@ a{
     top: 20px;
     color: white;
 }
-.renseigner_header_sentence, .connexion_header, .inscription_header, .deconnexion_header, .user_header, .notification{
+.renseigner_header_sentence, .connexion_header, .inscription_header, .deconnexion_header, .user_header, .notification, .notification_close{
     color: white;
     text-align: right;
     position: relative;
@@ -66,6 +66,11 @@ a{
     transition: 2s;
     border-width: 1px;
     display: inline-block;
+}
+.notification_close{
+    position: absolute;
+    display: none;
+    left: 0;
 }
 .header_buttons{
     z-index: 10000;

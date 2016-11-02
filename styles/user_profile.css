@@ -32,9 +32,10 @@ and open the template in the editor.
     text-align: center;
 }
 .titre_first_half p, .titre_second_half p, .titre_livres_activites{
-    font-family: 'Kaushan Script', cursive;
+    /*font-family: 'Kaushan Script', cursive;*/
     text-align: center;
     text-decoration: underline;
+    font-size: 21px;
 }
 .dernieres_activites{
     text-align: center;

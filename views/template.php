@@ -12,9 +12,10 @@ $header_sentence_text = getHeaderSentence();
 ?>
 <html lang="fr">
     <head>
+        <link rel="shortcut icon" href="<?php echo $global_url_src ?>/images/logo_eupheme.ico" />
         <meta charset="UTF-8">
         <title>Euphème</title>
-        <meta name="description" content="description de ma page">
+        <meta name="description" content="Et l'enchanteur, maître des mots et des fleurs, naquit. Enfant sage au milieu des tumultes.">
         <?php if (!$detect->isMobile() && !$detect->isTablet()) { ?>
             <link rel="stylesheet" href="<?php echo $global_url_src ?>/styles/style_template.css" />
             <link rel="stylesheet" href="<?php echo $global_url_src ?>/styles/index_index.css" />
@@ -50,6 +51,9 @@ $header_sentence_text = getHeaderSentence();
                 <?php } ?>
                 <?php if (!empty($_SESSION)) { ?>
                     <div class="notification">
+                        <p>Notification<span class="nb_notification"></span></p>
+                    </div>
+                    <div class="notification_close">
                         <p>Notification<span class="nb_notification"></span></p>
                     </div>
                     <div class="deconnexion_header">

@@ -229,14 +229,10 @@ function setNotification($id_element, $id_notifiant, $table) {
                     . 'VALUES(' . $row[0]['id'] . ', ' . $row[0]['id_user'] . ', ' . $id_notifiant . ', ' . $row[0]['id_type'] . ', "' . $row[0]['valeur'] . '", NOW(), ' . $row[0]['id_type_element'] . ', '
                     . '"' . $row[0]['nom_user'] . '", "' . $row[0]['prenom_user'] . '", 0, 0)';
         } elseif ($table == "livres") {
-            $sql_insert = 'INSERT INTO notification (id_element, id_user, id_user_notifiant, id_type, value, date_notification, id_type_element,nom_user, prenom_user) '
+            $sql_insert = 'INSERT INTO notification (id_element, id_user, id_user_notifiant, id_type, value, date_notification, id_type_element,nom_user, prenom_user, archivage, seen) '
                     . 'VALUES(' . $row[0]['id'] . ', ' . $row[0]['id_user'] . ', ' . $id_notifiant . ', ' . $row[0]['id_type'] . ', "' . $row[0]['titre'] . '", NOW(), 0, '
                     . '"' . $row[0]['nom_user'] . '", "' . $row[0]['prenom_user'] . '", 0, 0)';
         }
-//        echo '<pre>';
-//        print_r($sql_insert);
-//        echo '</pre>';
-//        die();
         $query_insert = $pdo->prepare($sql_insert);
         $query_insert->execute();
     }
