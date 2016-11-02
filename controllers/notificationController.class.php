@@ -15,7 +15,11 @@ class notificationController {
 
     public function indexAction($args) {
         if (!empty($_GET['id_element'])) {
-            $commentaire_liker = setNotification($_GET['id_element'], $_GET['user_profile'], $_GET['table']);
+            if (!empty($_GET['valeur'])) {
+                setNotification($_GET['id_element'], $_GET['user_profile'], $_GET['table'], $_GET['valeur'], $_GET['livre_user']);
+            } else {
+                setNotification($_GET['id_element'], $_GET['user_profile'], $_GET['table']);
+            }
         }
     }
 

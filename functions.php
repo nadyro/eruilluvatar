@@ -214,27 +214,46 @@ function setCommentaires_Likes($id_commentaire, $user_profile, $date = "", $nb_l
     }
 }
 
-function setNotification($id_element, $id_notifiant, $table) {
+function setNotification($id_element, $id_notifiant, $table, $valeur = "", $livre_user = 0) {
     global $pdo;
     $table_likes = rtrim($table, 's');
+    $ecrit = 0;
     if (!empty($id_element)) {
-        $sql = "SELECT distinct table_t.*, u.nom_user, u.prenom_user FROM " . $table . " table_t JOIN user u ON(u.id = table_t.id_user) "
-                . " JOIN " . $table . "_likes table_likes ON(table_likes.id_" . $table_likes . " = table_t.id)"
-                . " WHERE table_likes.id_user = :id_notifiant AND table_t.id = :id_element";
+        $sql = "SELECT distinct table_t.*, u.nom_user, u.prenom_user ";
+        if (!empty($valeur)) {
+            $sql.= ", l.titre ";
+        }
+        $sql .= "FROM " . $table . " table_t JOIN user u ON(u.id = table_t.id_user)";
+        if (empty($valeur)) {
+            $sql .= " JOIN " . $table . "_likes table_likes ON(table_likes.id_" . $table_likes . " = table_t.id)"
+                    . " WHERE table_likes.id_user = :id_notifiant AND table_t.id = :id_element";
+        } else {
+            $ecrit = 1;
+            $sql .= " JOIN livres l ON (l.id = table_t.id_type_element)";
+            $sql .= " WHERE table_t.id_user = :id_notifiant AND table_t.id_type_element = :id_element AND l.id_user = " . $livre_user;
+        }
         $query = $pdo->prepare($sql);
         $query->execute(array("id_notifiant" => $id_notifiant, "id_element" => $id_element));
         $row = $query->fetchAll(PDO::FETCH_ASSOC);
-        if ($table == "commentaires") {
-            $sql_insert = 'INSERT INTO notification (id_element, id_user, id_user_notifiant, id_type, value, date_notification, id_type_element, nom_user, prenom_user, archivage, seen) '
-                    . 'VALUES(' . $row[0]['id'] . ', ' . $row[0]['id_user'] . ', ' . $id_notifiant . ', ' . $row[0]['id_type'] . ', "' . $row[0]['valeur'] . '", NOW(), ' . $row[0]['id_type_element'] . ', '
-                    . '"' . $row[0]['nom_user'] . '", "' . $row[0]['prenom_user'] . '", 0, 0)';
-        } elseif ($table == "livres") {
-            $sql_insert = 'INSERT INTO notification (id_element, id_user, id_user_notifiant, id_type, value, date_notification, id_type_element,nom_user, prenom_user, archivage, seen) '
-                    . 'VALUES(' . $row[0]['id'] . ', ' . $row[0]['id_user'] . ', ' . $id_notifiant . ', ' . $row[0]['id_type'] . ', "' . $row[0]['titre'] . '", NOW(), 0, '
-                    . '"' . $row[0]['nom_user'] . '", "' . $row[0]['prenom_user'] . '", 0, 0)';
+        foreach ($row as $kk => $vv) {
+            if ($table == "commentaires") {
+                if ($ecrit == 0) {
+                    $sql_insert = 'INSERT INTO notification (id_element, id_user, id_user_notifiant, id_type, "", value, date_notification, id_type_element, nom_user, prenom_user, archivage, seen, ecrit) '
+                            . 'VALUES(' . $vv['id'] . ', ' . $vv['id_user'] . ', ' . $id_notifiant . ', ' . $vv['id_type'] . ', "", "' . $vv['valeur'] . '", NOW(), ' . $vv['id_type_element'] . ', '
+                            . '"' . $vv['nom_user'] . '", "' . $vv['prenom_user'] . '", 0, 0,' . $ecrit . ')';
+                } else {
+                    $sql_insert = 'INSERT INTO notification (id_element, id_user, id_user_notifiant, id_type, titre, value, date_notification, id_type_element, nom_user, prenom_user, archivage, seen, ecrit) '
+                            . 'VALUES(' . $vv['id'] . ', ' . $livre_user . ', ' . $id_notifiant . ', ' . $vv['id_type'] . ', "' . $vv['titre'] . '","' . $vv['valeur'] . '", NOW(), ' . $vv['id_type_element'] . ', '
+                            . '"' . $vv['nom_user'] . '", "' . $vv['prenom_user'] . '", 0, 0,' . $ecrit . ')';
+                }
+            } elseif ($table == "livres") {
+                $sql_insert = 'INSERT INTO notification (id_element, id_user, id_user_notifiant, id_type, titre, value, date_notification, id_type_element,nom_user, prenom_user, archivage, seen, ecrit) '
+                        . 'VALUES(' . $vv['id'] . ', ' . $vv['id_user'] . ', ' . $id_notifiant . ', ' . $vv['id_type'] . ', "","' . $vv['titre'] . '", NOW(), 0, '
+                        . '"' . $vv['nom_user'] . '", "' . $vv['prenom_user'] . '", 0, 0, 0)';
+            }
+            $query_insert = $pdo->prepare($sql_insert);
+            $query_insert->execute();
         }
-        $query_insert = $pdo->prepare($sql_insert);
-        $query_insert->execute();
     }
 }
 
@@ -249,11 +268,11 @@ function getNotification($id_user) {
     }
 }
 
-function setNotification_seen($id_user, $notification_seen){
+function setNotification_seen($id_user, $notification_seen) {
     global $pdo;
-    
-    if(!empty($id_user)){
-        $sql = "UPDATE notification SET seen = ".$notification_seen." WHERE id_user = :id_user";
+
+    if (!empty($id_user)) {
+        $sql = "UPDATE notification SET seen = " . $notification_seen . " WHERE id_user = :id_user";
         $query = $pdo->prepare($sql);
         $query->execute(array("id_user" => $id_user));
     }

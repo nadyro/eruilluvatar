@@ -3,6 +3,9 @@ $(document).ready(function () {
     console.log(document.cookie);
     getNotification(readCookie("cookie_users"));
 //    eraseCookie("nb_notifs");
+    $(".une_notif").click(function () {
+        location.reload();
+    });
 });
 
 
@@ -24,6 +27,7 @@ function like_favorite_element(this_this, element_zero, element_type, element_on
                 id_type: id_type
             },
             complete: function () {
+//                window.open(this.url);
                 if (element_type == "like") {
                     if (element_two == 1) {
                         if ($("." + this_this).hasClass("loved_png")) {
@@ -86,7 +90,7 @@ function like_favorite_element(this_this, element_zero, element_type, element_on
     }
 }
 
-function ecrire_commentaire(id_user, id_element, valeur) {
+function ecrire_commentaire(id_user, id_element, valeur, livre_user) {
     $.ajax({
         url: "myproject/commentaires/",
         type: "GET",
@@ -96,7 +100,30 @@ function ecrire_commentaire(id_user, id_element, valeur) {
             valeur: valeur
         },
         complete: function () {
-            location.reload();
+            actualisation_requete_server(id_element, "commentaires", valeur, livre_user);
+//            $(".un_livre_second_half").append(
+//                        '<div class="commentaires_livre"><div class="infos_user_commentaire"><p>Sehnoun Nadir</p></div>\n\
+//<div class="le_commentaire"><p>Un tit com !</div>\n\
+//<div class="like_commentaire"><img src="/images/loved.png" alt="" id_commentaire="70" post-id="0" id_element="23" element-type="like" like="1" class="comment_png loved_png">\n\
+//<img src="/images/loved_colored.png" alt="" id_commentaire="70" post-id="0" id_element="23" element-type="like" like="-1" class="comment_png second_loved_png second_img_livre_affiche"></div>\n\
+//<div class="date_commentaire"> Moins d\'une heure</div></div>');
+        }
+    });
+}
+
+function actualisation_requete_server(element_one, element_zero, value, livre_user) {
+    $.ajax({
+        url: "myproject/notification",
+        type: "GET",
+        dataType: 'json',
+        data: {
+            id_element: element_one,
+            user_profile: readCookie('cookie_users'),
+            table: element_zero,
+            valeur: value,
+            livre_user: livre_user
+        },
+        complete: function (result) {
         }
     });
 }
@@ -132,6 +159,7 @@ function getNotification(id_user) {
 //                }
                     createCookie("nb_notifs", length_notification, "Thu, 01 Jan 2100 00:00:00 UTC");
                     var type_notification = "";
+                    var ecrit_ou_like = "";
                     if (length_notification > 0) {
                         $(".notification").css({
                             "background-color": "#fa3e3e"
@@ -146,8 +174,13 @@ function getNotification(id_user) {
                         } else {
                             type_notification = "livre";
                         }
+                        if (notification[i].ecrit == "1") {
+                            ecrit_ou_like = "écrit un ";
+                        } else {
+                            ecrit_ou_like = "aimé votre ";
+                        }
                         $(".les_notifications .une_notif").append(
-                                " " + notification[i].nom_user + " " + notification[i].prenom_user + " a aimé votre " + type_notification + " : '" + notification[i].value + "'"
+                                " " + notification[i].nom_user + " " + notification[i].prenom_user + " a " + ecrit_ou_like + " " + type_notification + " : '" + notification[i].value + "'"
                                 );
                         $(".les_notifications .une_notif").append("<div class='date_notification'>" + notification[i].date_notification + "</div>");
                     }
@@ -161,35 +194,20 @@ function getNotification(id_user) {
             isPaused = false;
             $(this).hide();
             $(".notification_close").css({
-                display : "inline-block",
+                display: "inline-block",
                 position: "relative"
             });
             $(".les_notifications").show();
         });
-        $(".notification_close").click(function(e){
-           e.preventDefault();
-           isPaused = true;
-           $(this).hide();
-           $(this).css({
-              position: "absolute" 
-           });
-           $(".les_notifications").hide();
-           $(".notification").show();
+        $(".notification_close").click(function (e) {
+            e.preventDefault();
+            isPaused = true;
+            $(this).hide();
+            $(this).css({
+                position: "absolute"
+            });
+            $(".les_notifications").hide();
+            $(".notification").show();
         });
     }, 2000);
-}
-
-function actualisation_requete_server(element_one, element_zero) {
-    $.ajax({
-        url: "myproject/notification",
-        type: "GET",
-        dataType: 'json',
-        data: {
-            id_element: element_one,
-            user_profile: readCookie('cookie_users'),
-            table: element_zero
-        },
-        complete: function (result) {
-        }
-    });
 }

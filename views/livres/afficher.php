@@ -95,7 +95,7 @@ if (!empty($commentaires_like)) {
             <div class="ecrire_commentaire">
                 <input type="hidden" class="hidden_commentaire" livre-id="<?php echo $un_livre[0]['id'] ?>">
                 <textarea placeholder="Ecrire un commentaire..." class="text_commentaire"></textarea> 
-                <input type="button" class="submit_commentaire" id_element="<?php echo $un_livre[0]['id'] ?>" value="Commenter !">
+                <input type="button" class="submit_commentaire" id_element="<?php echo $un_livre[0]['id'] ?>" livre_user="<?php echo $un_livre[0]['id_user'] ?>" value="Commenter !">
             </div>
 
         </div>

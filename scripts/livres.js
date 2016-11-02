@@ -51,9 +51,6 @@ $(document).ready(function () {
         }
         
     });
-    $(".une_notif").click(function(){
-       alert("yo"); 
-    });
 
     $(".like_favorite_png").each(function () {
         $(this).click(function () {
@@ -114,7 +111,8 @@ $(document).ready(function () {
         var id_user = readCookie("cookie_users");
         var id_element = $(this).attr("id_element");
         var valeur = $(".text_commentaire").val();
-        ecrire_commentaire(id_user, id_element, valeur);
+        var livre_user = $(this).attr("livre_user");
+        ecrire_commentaire(id_user, id_element, valeur, livre_user);
     });
 
     $(".overlay_img_livre").each(function () {
